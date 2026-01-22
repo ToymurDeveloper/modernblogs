@@ -211,26 +211,16 @@ exports.refreshToken = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     // Clear refresh token from database
-    // await User.findByIdAndUpdate(req.user.id, { refreshToken: null });
-
-    const { refreshToken } = req.body;
-
-    if (refreshToken) {
-      await User.findOneAndUpdate({ refreshToken }, { refreshToken: null });
-    }
+    await User.findByIdAndUpdate(req.user.id, { refreshToken: null });
 
     res.status(200).json({
       success: true,
       message: "Logout successful",
     });
   } catch (error) {
-    // res.status(500).json({
-    //   success: false,
-    //   message: error.message,
-    // });
-    res.status(200).json({
-      success: true,
-      message: "Logout successful",
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
