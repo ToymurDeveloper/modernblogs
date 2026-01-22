@@ -13,6 +13,7 @@ export default function SingleBlogClient({ params }) {
   const [trendingBlogs, setTrendingBlogs] = useState([]);
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [readingTimeSeconds, setReadingTimeSeconds] = useState(0);
   const slug = params.slug;
 
   useEffect(() => {
@@ -24,6 +25,19 @@ export default function SingleBlogClient({ params }) {
     if (slug) {
       fetchBlog();
     }
+  }, [slug]);
+
+  useEffect(() => {
+    // Reset timer when blog changes
+    setReadingTimeSeconds(0);
+
+    // Start timer
+    const timer = setInterval(() => {
+      setReadingTimeSeconds((prev) => prev + 1);
+    }, 1000); // Update every second
+
+    // Cleanup: Stop timer when component unmounts or blog changes
+    return () => clearInterval(timer);
   }, [slug]);
 
   const fetchBlog = async () => {
@@ -64,6 +78,17 @@ export default function SingleBlogClient({ params }) {
   const formatDate = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(date).toLocaleDateString("en-US", options);
+  };
+
+  const formatReadingTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    if (minutes === 0) {
+      return "0 minute";
+    } else if (minutes === 1) {
+      return "1 minute";
+    } else {
+      return `${minutes} minutes`;
+    }
   };
 
   if (loading) {
@@ -157,7 +182,7 @@ export default function SingleBlogClient({ params }) {
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span>{blog.readingTime || 8} minutes</span>
+                <span>{formatReadingTime(readingTimeSeconds)}</span>
               </div>
 
               {/* Subtitle */}
@@ -240,13 +265,12 @@ export default function SingleBlogClient({ params }) {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="flex flex-col">
-              <div className="top-8">
-                <TrendingBlogs blogs={trendingBlogs} />
-              </div>
-              <div className="mt-8 top-8">
-                <PopularBlogs blogs={popularBlogs} />
-              </div>
+            <div>
+              <TrendingBlogs blogs={trendingBlogs} />
+            </div>
+
+            <div className="mt-8">
+              <PopularBlogs blogs={popularBlogs} />
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ const blogSchema = new mongoose.Schema(
       set: (tags) => tags.map((tag) => tag.toLowerCase().trim()),
     },
 
-    metaTitle: { type: String, maxlength: 60 },
+    metaTitle: { type: String, maxlength: 90 },
     metaDescription: { type: String, maxlength: 160 },
     metaKeywords: { type: [String], default: [] },
 
@@ -91,7 +91,7 @@ const blogSchema = new mongoose.Schema(
       type: Date,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Blog", blogSchema);

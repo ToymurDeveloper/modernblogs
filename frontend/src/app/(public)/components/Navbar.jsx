@@ -8,14 +8,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-// const navItems = [
-//   { name: "Home", id: "home" },
-//   { name: "Explore", id: "explore" },
-//   { name: "Services", id: "services" },
-//   { name: "About", id: "about" },
-//   { name: "Contact", id: "contact" },
-// ];
-
 const navItems = [
   { name: "Home", path: "/" },
   { name: "Explore", path: "/blogs" },
@@ -50,21 +42,6 @@ export default function Navbar() {
     setMobileMenuOpen(false);
     await logout();
   };
-
-  // const handleNavClick = (e, id) => {
-  //   e.preventDefault();
-
-  //   // If on homepage, scroll to section
-  //   if (pathname === "/") {
-  //     const element = document.getElementById(id);
-  //     if (element) {
-  //       element.scrollIntoView({ behavior: "smooth" });
-  //     }
-  //   } else {
-  //     // If on another page, go to homepage with hash
-  //     router.push(`/#${id}`);
-  //   }
-  // };
 
   const handleNavClick = (e, path) => {
     e.preventDefault();

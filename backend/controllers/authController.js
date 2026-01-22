@@ -213,6 +213,12 @@ exports.logout = async (req, res) => {
     // Clear refresh token from database
     await User.findByIdAndUpdate(req.user.id, { refreshToken: null });
 
+    const { refreshToken } = req.body;
+
+    if (refreshToken) {
+      await User.findOneAndUpdate({ refreshToken }, { refreshToken: null });
+    }
+
     res.status(200).json({
       success: true,
       message: "Logout successful",
@@ -348,11 +354,11 @@ exports.googleCallback = async (req, res) => {
 
     // Redirect to frontend with tokens
     res.redirect(
-      `${process.env.FRONTEND_URL}/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`
+      `${process.env.FRONTEND_URL}/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
     );
   } catch (error) {
     res.redirect(
-      `${process.env.FRONTEND_URL}/login?error=authentication_failed`
+      `${process.env.FRONTEND_URL}/login?error=authentication_failed`,
     );
   }
 };

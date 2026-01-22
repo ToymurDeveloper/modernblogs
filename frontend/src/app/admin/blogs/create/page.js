@@ -77,7 +77,7 @@ export default function CreateBlogPage() {
         "preview",
       ],
     }),
-    []
+    [],
   );
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function CreateBlogPage() {
     formData.append("file", file);
     formData.append(
       "upload_preset",
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
     );
 
     const response = await fetch(
@@ -120,7 +120,7 @@ export default function CreateBlogPage() {
       {
         method: "POST",
         body: formData,
-      }
+      },
     );
 
     const data = await response.json();
@@ -476,13 +476,13 @@ export default function CreateBlogPage() {
                     htmlFor="metaTitle"
                     className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    Meta Title (max 60 characters)
+                    Meta Title (max 90 characters)
                   </label>
                   <input
                     type="text"
                     id="metaTitle"
                     name="metaTitle"
-                    maxLength="60"
+                    maxLength="90"
                     value={formData.metaTitle}
                     onChange={handleChange}
                     disabled={loading}
@@ -490,7 +490,7 @@ export default function CreateBlogPage() {
                     placeholder="Leave empty to use title"
                   />
                   <p className="mt-1 text-sm text-gray-500">
-                    {formData.metaTitle.length}/60 characters
+                    {formData.metaTitle.length}/90 characters
                   </p>
                 </div>
 

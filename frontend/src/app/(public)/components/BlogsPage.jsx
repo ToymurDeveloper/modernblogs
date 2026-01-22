@@ -166,11 +166,11 @@ export default function BlogsPage() {
 
           {/* Sidebar - Latest and Popular Blogs */}
           <div className="lg:col-span-1">
-            <div className="top-8">
+            <div>
               <TrendingBlogs blogs={trendingBlogs} />
             </div>
 
-            <div className="mt-8 top-8">
+            <div className="mt-8">
               <PopularBlogs blogs={popularBlogs} />
             </div>
           </div>

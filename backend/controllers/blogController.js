@@ -9,124 +9,6 @@ const calculateReadingTime = (content) => {
   return Math.ceil(wordCount / wordsPerMinute);
 };
 
-// @desc    Create a new blog
-// @route   POST /api/blogs
-// @access  Private (admin, subadmin)
-// exports.createBlog = async (req, res) => {
-//   try {
-//     const {
-//       title,
-//       subTitle,
-//       content,
-//       tags,
-//       metaTitle,
-//       metaDescription,
-//       metaKeywords,
-//       category,
-//       contentType,
-//       authorDisplayName,
-//       canonicalUrl,
-//       isPopular,
-//       isTrending,
-//       faqs,
-//       status,
-//     } = req.body;
-
-//     // Validate category exists
-//     const categoryExists = await Category.findById(category);
-//     if (!categoryExists) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Category not found",
-//       });
-//     }
-
-//     // Handle image upload
-//     let imageUrl = "";
-//     if (req.body.image) {
-//       try {
-//         const uploadResponse = await cloudinary.uploader.upload(
-//           req.body.image,
-//           {
-//             folder: "blog-images",
-//             transformation: [
-//               { width: 1200, height: 630, crop: "limit" },
-//               { quality: "auto" },
-//             ],
-//           }
-//         );
-//         imageUrl = uploadResponse.secure_url;
-//       } catch (error) {
-//         return res.status(400).json({
-//           success: false,
-//           message: "Image upload failed",
-//           error: error.message,
-//         });
-//       }
-//     }
-
-//     // Generate slug from title
-//     const slug = title
-//       .toLowerCase()
-//       .trim()
-//       .replace(/[^\w\s-]/g, "")
-//       .replace(/[\s_-]+/g, "-")
-//       .replace(/^-+|-+$/g, "");
-
-//     // Check if slug already exists
-//     const slugExists = await Blog.findOne({ slug });
-//     if (slugExists) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "A blog with this title already exists",
-//       });
-//     }
-
-//     // Calculate reading time
-//     const readingTime = calculateReadingTime(content);
-
-//     // Create blog
-//     const blog = await Blog.create({
-//       title,
-//       slug,
-//       subTitle,
-//       image: imageUrl,
-//       content,
-//       tags: tags || [],
-//       metaTitle: metaTitle || title,
-//       metaDescription: metaDescription || subTitle,
-//       metaKeywords: metaKeywords || [],
-//       category,
-//       contentType: contentType || "BlogPosting",
-//       author: req.user._id,
-//       authorDisplayName: authorDisplayName || "Editor",
-//       canonicalUrl,
-//       isPopular: isPopular || false,
-//       isTrending: isTrending || false,
-//       readingTime,
-//       faqs: faqs || [],
-//       status: status || "draft",
-//       publishedAt: status === "published" ? new Date() : null,
-//     });
-
-//     // Populate category and author
-//     await blog.populate("category", "name slug");
-//     await blog.populate("author", "name email");
-
-//     res.status(201).json({
-//       success: true,
-//       message: "Blog created successfully",
-//       blog,
-//     });
-//   } catch (error) {
-//     console.error("Create blog error:", error);
-//     res.status(500).json({
-//       success: false,
-//       message: error.message || "Failed to create blog",
-//     });
-//   }
-// };
-
 exports.createBlog = async (req, res) => {
   try {
     const {
@@ -540,7 +422,7 @@ exports.updateBlog = async (req, res) => {
         status: status || blog.status,
         publishedAt,
       },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     )
       .populate("category", "name slug")
       .populate("author", "name email");
