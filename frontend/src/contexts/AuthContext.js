@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       }
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 
   // Response interceptor
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 
   // Load user from token
@@ -96,6 +96,47 @@ export const AuthProvider = ({ children }) => {
 
     loadUser();
   }, []);
+
+  //adding new
+  useEffect(() => {
+    // Add response interceptor
+    const responseInterceptor = axiosInstance.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+
+        // If 401 error and not already retried
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+
+          // Check if this is a logout request
+          if (originalRequest.url.includes("/logout")) {
+            // Allow logout to proceed even with 401
+            toast.info("You are already logged out from another window");
+            setUser(null);
+            localStorage.removeItem("user");
+            router.push("/login");
+            return Promise.resolve({
+              data: { success: true, alreadyLoggedOut: true },
+            });
+          }
+
+          // For other requests, clear user and redirect
+          setUser(null);
+          localStorage.removeItem("user");
+          toast.error("Session expired. Please login again");
+          router.push("/login");
+        }
+
+        return Promise.reject(error);
+      },
+    );
+
+    // Cleanup
+    return () => {
+      axiosInstance.interceptors.response.eject(responseInterceptor);
+    };
+  }, [router]);
 
   // Register
   const register = async (name, email, password) => {
@@ -189,7 +230,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.put(
         `${API_URL}/auth/reset-password/${token}`,
-        { password }
+        { password },
       );
       return response.data;
     } catch (error) {
@@ -211,5 +252,3 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-
