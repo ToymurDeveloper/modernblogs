@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      toast.success;
+      toast.success.message;
     } catch (err) {
       toast.error(err.message || "Login failed");
       setError(err.message || "Login failed");

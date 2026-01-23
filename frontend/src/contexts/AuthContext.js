@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -117,6 +118,7 @@ export const AuthProvider = ({ children }) => {
       // if (user.role === "admin" || user.role === "subadmin") {
       //   router.push("/admin/dashboard");
       // } else {
+      toast.success(response.data.message);
       router.push("/login");
 
       return response.data;
@@ -140,6 +142,8 @@ export const AuthProvider = ({ children }) => {
 
       setUser(user);
 
+      toast.success(response.data.message);
+
       // Redirect based on role
       if (user.role === "admin" || user.role === "subadmin") {
         router.push("/admin/dashboard");
@@ -159,45 +163,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout
-  // const logout = async () => {
-  //   try {
-  //     await axiosInstance.post("/auth/logout");
-  //   } catch (error) {
-  //     console.error("Logout error:", error);
-  //   } finally {
-  //     Cookies.remove("accessToken");
-  //     Cookies.remove("refreshToken");
-  //     setUser(null);
-  //     router.push("/login");
-  //   }
-  // };
-
   const logout = async () => {
     try {
       const response = await axiosInstance.post("/auth/logout");
-
       if (response.data.alreadyLoggedOut) {
-        // Show specific message for already logged out
-        toast.info("You are already logged out from another window");
+        toast.success(response.data.message);
       } else {
-        toast.success("Logged out successfully");
+        toast.success(response.data.message);
       }
-
-      setUser(null);
-      localStorage.removeItem("user");
-      router.push("/login");
     } catch (error) {
-      // Even if logout fails, clear local state
       console.error("Logout error:", error);
-
-      if (error.response?.status === 401) {
-        toast.info("You are already logged out from another window");
-      } else {
-        toast.error("Logout failed, but clearing local session");
-      }
-
+      toast.error(error.response?.data?.message);
+    } finally {
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
       setUser(null);
-      localStorage.removeItem("user");
       router.push("/login");
     }
   };

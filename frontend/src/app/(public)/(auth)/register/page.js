@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
     try {
       await register(formData.name, formData.email, formData.password);
-      toast.success("Registration successful! Please sign in.");
+      toast.success.message;
     } catch (err) {
       toast.error(err.message || "Registration failed");
       setError(err.message || "Registration failed");

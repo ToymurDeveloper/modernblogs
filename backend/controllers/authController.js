@@ -39,7 +39,7 @@ exports.register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: "Registration successful! Please log in",
       accessToken,
       refreshToken,
       user: {
@@ -224,9 +224,7 @@ exports.refreshToken = async (req, res) => {
 //     });
 //   }
 // };
-// @desc    Logout user
-// @route   POST /api/auth/logout
-// @access  Private
+
 exports.logout = async (req, res) => {
   try {
     // Check if user is already logged out (no valid token)
@@ -246,7 +244,7 @@ exports.logout = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Logged out successfully",
+      message: "Logged out successful",
       alreadyLoggedOut: false,
     });
   } catch (error) {
