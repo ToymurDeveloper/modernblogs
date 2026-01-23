@@ -94,10 +94,10 @@ export default function Header() {
         <h1 className="text-4xl md:text-5xl font-bold text-amber-500 mb-4">
           Enjoy your world of joy
         </h1>
-        <h3 className="mb-10 text-base sm:text-lg">
+        <h1 className="mb-10 text-base sm:text-lg text-gray-800">
           From local escapes to far-flung adventures, find what makes you happy
           anytime, anywhere
-        </h3>
+        </h1>
 
         {/* Search Bar */}
         <div ref={searchRef} className="relative">
