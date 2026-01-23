@@ -208,19 +208,52 @@ exports.refreshToken = async (req, res) => {
 };
 
 // Logout
+// exports.logout = async (req, res) => {
+//   try {
+//     // Clear refresh token from database
+//     await User.findByIdAndUpdate(req.user.id, { refreshToken: null });
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Logout successful",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+// @desc    Logout user
+// @route   POST /api/auth/logout
+// @access  Private
 exports.logout = async (req, res) => {
   try {
-    // Clear refresh token from database
-    await User.findByIdAndUpdate(req.user.id, { refreshToken: null });
+    // Check if user is already logged out (no valid token)
+    if (!req.user) {
+      return res.status(200).json({
+        success: true,
+        message: "You are already logged out from another window",
+        alreadyLoggedOut: true,
+      });
+    }
+
+    // Clear cookie
+    res.cookie("token", "none", {
+      expires: new Date(Date.now() + 10 * 1000), // Expire in 10 seconds
+      httpOnly: true,
+    });
 
     res.status(200).json({
       success: true,
-      message: "Logout successful",
+      message: "Logged out successfully",
+      alreadyLoggedOut: false,
     });
   } catch (error) {
+    console.error("Logout error:", error);
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Logout failed",
     });
   }
 };

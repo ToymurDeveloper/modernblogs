@@ -1,60 +1,83 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const { verifyAccessToken } = require("../utils/jwt");
 
-// Protect routes - verify JWT token
 exports.protect = async (req, res, next) => {
-  let token;
-
-  // Check for token in Authorization header
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
-  // Check for token in cookies
-  else if (req.cookies.token) {
-    token = req.cookies.token;
-  }
-
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "Not authorized to access this route",
-    });
-  }
-
   try {
-    const decoded = verifyAccessToken(token);
+    let token;
 
-    if (!decoded) {
+    if (req.cookies.token) {
+      token = req.cookies.token;
+    } else if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+
+    // No token found
+    if (!token) {
+      // For logout route, allow it to proceed
+      if (req.path === "/logout" || req.originalUrl.includes("/logout")) {
+        req.user = null;
+        return next();
+      }
+
       return res.status(401).json({
         success: false,
-        message: "Invalid or expired token",
+        message: "Not authorized to access this route",
       });
     }
 
-    req.user = await User.findById(decoded.id).select("-password");
+    try {
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select("-password");
 
-    if (!req.user) {
+      if (!req.user) {
+        // For logout route, allow it to proceed
+        if (req.path === "/logout" || req.originalUrl.includes("/logout")) {
+          req.user = null;
+          return next();
+        }
+
+        return res.status(401).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+
+      next();
+    } catch (error) {
+      // Token is invalid or expired
+      // For logout route, allow it to proceed
+      if (req.path === "/logout" || req.originalUrl.includes("/logout")) {
+        req.user = null;
+        return next();
+      }
+
       return res.status(401).json({
         success: false,
-        message: "User not found",
+        message: "Not authorized, token failed",
       });
     }
-
-    next();
   } catch (error) {
-    return res.status(401).json({
+    console.error("Auth middleware error:", error);
+    return res.status(500).json({
       success: false,
-      message: "Not authorized to access this route",
+      message: "Server error in authentication",
     });
   }
 };
 
-// Role-based authorization
 exports.authorize = (...roles) => {
   return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authorized to access this route",
+      });
+    }
+
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,

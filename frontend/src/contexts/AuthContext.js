@@ -97,47 +97,6 @@ export const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  //adding new
-  useEffect(() => {
-    // Add response interceptor
-    const responseInterceptor = axiosInstance.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
-
-        // If 401 error and not already retried
-        if (error.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-
-          // Check if this is a logout request
-          if (originalRequest.url.includes("/logout")) {
-            // Allow logout to proceed even with 401
-            toast.info("You are already logged out from another window");
-            setUser(null);
-            localStorage.removeItem("user");
-            router.push("/login");
-            return Promise.resolve({
-              data: { success: true, alreadyLoggedOut: true },
-            });
-          }
-
-          // For other requests, clear user and redirect
-          setUser(null);
-          localStorage.removeItem("user");
-          toast.error("Session expired. Please login again");
-          router.push("/login");
-        }
-
-        return Promise.reject(error);
-      },
-    );
-
-    // Cleanup
-    return () => {
-      axiosInstance.interceptors.response.eject(responseInterceptor);
-    };
-  }, [router]);
-
   // Register
   const register = async (name, email, password) => {
     try {
@@ -200,15 +159,45 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout
+  // const logout = async () => {
+  //   try {
+  //     await axiosInstance.post("/auth/logout");
+  //   } catch (error) {
+  //     console.error("Logout error:", error);
+  //   } finally {
+  //     Cookies.remove("accessToken");
+  //     Cookies.remove("refreshToken");
+  //     setUser(null);
+  //     router.push("/login");
+  //   }
+  // };
+
   const logout = async () => {
     try {
-      await axiosInstance.post("/auth/logout");
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
+      const response = await axiosInstance.post("/auth/logout");
+
+      if (response.data.alreadyLoggedOut) {
+        // Show specific message for already logged out
+        toast.info("You are already logged out from another window");
+      } else {
+        toast.success("Logged out successfully");
+      }
+
       setUser(null);
+      localStorage.removeItem("user");
+      router.push("/login");
+    } catch (error) {
+      // Even if logout fails, clear local state
+      console.error("Logout error:", error);
+
+      if (error.response?.status === 401) {
+        toast.info("You are already logged out from another window");
+      } else {
+        toast.error("Logout failed, but clearing local session");
+      }
+
+      setUser(null);
+      localStorage.removeItem("user");
       router.push("/login");
     }
   };
