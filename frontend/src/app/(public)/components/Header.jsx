@@ -88,13 +88,13 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white py-16 px-4">
+    <header className="bg-white pt-9 pb-12 sm:py-14 px-4">
       <div className="max-w-2xl mx-auto text-center">
         {/* Title */}
         <h1 className="text-4xl md:text-5xl font-bold text-amber-500 mb-4">
           Enjoy your world of joy
         </h1>
-        <h1 className="mb-10 text-base sm:text-lg text-gray-800">
+        <h1 className="mb-10 text-base sm:text-lg text-gray-700">
           From local escapes to far-flung adventures, find what makes you happy
           anytime, anywhere
         </h1>
@@ -114,8 +114,8 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => searchResults.length > 0 && setShowResults(true)}
-                placeholder="Places to go, things to do, explore to deep..."
-                className="flex-1 text-gray-700 text-base outline-none placeholder-gray-400"
+                placeholder="Places to go, explore to deep..."
+                className="w-full text-gray-700 text-base outline-none placeholder-gray-400"
               />
 
               {/* Search Button */}

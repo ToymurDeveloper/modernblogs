@@ -236,9 +236,14 @@ exports.logout = async (req, res) => {
       });
     }
 
-    // Clear cookie
-    res.cookie("token", "none", {
-      expires: new Date(Date.now() + 10 * 1000), // Expire in 10 seconds
+    // Clear BOTH tokens
+    res.cookie("accessToken", "none", {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true,
+    });
+
+    res.cookie("refreshToken", "none", {
+      expires: new Date(Date.now() + 10 * 1000),
       httpOnly: true,
     });
 

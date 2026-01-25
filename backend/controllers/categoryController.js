@@ -197,3 +197,23 @@ exports.deleteCategory = async (req, res) => {
     });
   }
 };
+
+// @route   GET /api/categories
+// @access  Public
+exports.getTopCategories = async (req, res) => {
+  try {
+    const categories = await Category.find()
+      .sort({ createdAt: -1, publishedAt: 1 })
+      .limit(6);
+
+    res.status(200).json({
+      success: true,
+      categories,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

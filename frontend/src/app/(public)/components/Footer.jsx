@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
-  Heart,
   Mail,
   Phone,
   MapPin,
@@ -15,10 +14,13 @@ import {
   Rss,
   BookOpen,
   ExternalLink,
-  MessageCircle,
 } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Footer = () => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -29,6 +31,22 @@ const Footer = () => {
       setIsSubscribed(true);
       setTimeout(() => setIsSubscribed(false), 3000);
       setEmail("");
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("/categories");
+      setCategories(response.data.categories);
+    } catch (error) {
+      toast.error("Failed to fetch categories");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,12 +102,6 @@ const Footer = () => {
           {/* Column 1: Brand & Description */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <Link href="/" className="flex items-center gap-2 group">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-2xl font-bold text-white">BlogHub</span>
-              </Link>
               <p className="mt-4 text-gray-400 leading-relaxed">
                 Your daily dose of technology, web development, and design
                 insights. We help developers and designers stay updated with the
@@ -98,7 +110,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="bg-gray-800/50 rounded-xl p-6 transform hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gray-800/50 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-white mb-3">
                 Stay Updated
               </h3>
@@ -120,7 +132,7 @@ const Footer = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95"
+                  className="cursor-pointer w-full bg-linear-to-r from-green-600 to-amber-500 text-white py-3 rounded-lg font-medium hover:from-green-600 hover:to-amber-600"
                 >
                   {isSubscribed ? "Subscribed! ✓" : "Subscribe Now"}
                 </button>
@@ -129,9 +141,7 @@ const Footer = () => {
               <p className="text-xs text-gray-500 mt-3 transition-all duration-300">
                 No spam. Unsubscribe anytime.{" "}
                 {isSubscribed && (
-                  <span className="text-green-400 animate-pulse">
-                    ✓ Welcome aboard!
-                  </span>
+                  <span className="text-green-400">✓ Welcome aboard!</span>
                 )}
               </p>
             </div>
@@ -256,7 +266,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8">
+        <div className="border-t border-gray-600 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Explorer. All rights reserved.

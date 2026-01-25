@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
@@ -11,15 +10,10 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(null);
   const { user, axiosInstance } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
-    if (!user || (user.role !== "admin" && user.role !== "subadmin")) {
-      router.push("/");
-      return;
-    }
     fetchCategories();
-  }, [user, router]);
+  }, []);
 
   const fetchCategories = async () => {
     try {
@@ -36,7 +30,7 @@ export default function CategoriesPage() {
   const handleDelete = async (id, name) => {
     if (
       !window.confirm(
-        `Are you sure you want to delete "${name}"? This action cannot be undone.`
+        `Are you sure you want to delete "${name}"? This action cannot be undone.`,
       )
     ) {
       return;
