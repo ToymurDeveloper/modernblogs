@@ -84,7 +84,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="pt-6 pb-16 bg-white">
+      <section className="pt-6 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">
             Our Values
@@ -145,7 +145,7 @@ export default function AboutPage() {
             </Link>
             <Link
               href="/contact"
-              className="px-6 py-3 bg-white text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 bg-amber-300 text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-amber-400 transition-colors"
             >
               Contact Us
             </Link>
