@@ -32,6 +32,7 @@ const nextConfig = {
           "your-api-domain.com",
       },
     ],
+    qualities: [70, 80, 90],
   },
 };
 

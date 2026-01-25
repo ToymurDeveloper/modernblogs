@@ -10,18 +10,19 @@ export default function BlogCard({ blog }) {
   return (
     <Link href={`/blogs/${blog.slug}`}>
       <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-        {/* Image */}
-        <div className="relative w-full h-48 bg-gray-200">
+        <div className="relative w-full aspect-video bg-gray-100 overflow-hidden">
           <Image
             src={blog.image}
             alt={blog.title}
             fill
             className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw"
+            loading="lazy"
+            quality={80}
           />
         </div>
 
-        {/* Content */}
-        <div className="p-4 flex flex-col flex-grow">
+        <div className="p-4 flex flex-col grow">
           {/* Title */}
           <h3 className="text-base font-semibold text-gray-900 mb-2 line-clamp-3 leading-snug">
             {blog.title}

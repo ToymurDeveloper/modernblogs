@@ -18,70 +18,136 @@ export default function BlogsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  // useEffect(() => {
+  //   fetchCategories();
+  //   fetchTrendingBlogs();
+  //   fetchPopularBlogs();
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchBlogs();
+  // }, [currentPage, selectedCategory]);
+
+  // const fetchCategories = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+  //     );
+  //     setCategories(response.data.categories);
+  //   } catch (error) {
+  //     console.error("Failed to fetch categories:", error);
+  //   }
+  // };
+
+  // const fetchTrendingBlogs = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
+  //     );
+  //     setTrendingBlogs(response.data.blogs);
+  //   } catch (error) {
+  //     console.error("Failed to fetch latest blogs:", error);
+  //   }
+  // };
+  // const fetchPopularBlogs = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
+  //     );
+  //     setPopularBlogs(response.data.blogs);
+  //   } catch (error) {
+  //     console.error("Failed to fetch latest blogs:", error);
+  //   }
+  // };
+
+  // const fetchBlogs = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const params = {
+  //       page: currentPage,
+  //       limit: 9,
+  //       status: "published",
+  //       ...(selectedCategory && { category: selectedCategory }),
+  //     };
+
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/blogs/public`,
+  //       { params },
+  //     );
+  //     setBlogs(response.data.blogs);
+  //     setTotalPages(response.data.totalPages);
+  //   } catch (error) {
+  //     console.error("Failed to fetch blogs:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+        );
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+
+    const fetchTrendingBlogs = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
+        );
+        setTrendingBlogs(response.data.blogs);
+      } catch (error) {
+        console.error("Failed to fetch latest blogs:", error);
+      }
+    };
+
+    const fetchPopularBlogs = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
+        );
+        setPopularBlogs(response.data.blogs);
+      } catch (error) {
+        console.error("Failed to fetch latest blogs:", error);
+      }
+    };
+
     fetchCategories();
     fetchTrendingBlogs();
     fetchPopularBlogs();
   }, []);
 
   useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      try {
+        const params = {
+          page: currentPage,
+          limit: 9,
+          status: "published",
+          ...(selectedCategory && { category: selectedCategory }),
+        };
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/public`,
+          { params },
+        );
+        setBlogs(response.data.blogs);
+        setTotalPages(response.data.totalPages);
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchBlogs();
   }, [currentPage, selectedCategory]);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories`,
-      );
-      setCategories(response.data.categories);
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    }
-  };
-
-  const fetchTrendingBlogs = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
-      );
-      setTrendingBlogs(response.data.blogs);
-    } catch (error) {
-      console.error("Failed to fetch latest blogs:", error);
-    }
-  };
-  const fetchPopularBlogs = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
-      );
-      setPopularBlogs(response.data.blogs);
-    } catch (error) {
-      console.error("Failed to fetch latest blogs:", error);
-    }
-  };
-
-  const fetchBlogs = async () => {
-    setLoading(true);
-    try {
-      const params = {
-        page: currentPage,
-        limit: 9,
-        status: "published",
-        ...(selectedCategory && { category: selectedCategory }),
-      };
-
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/public`,
-        { params },
-      );
-      setBlogs(response.data.blogs);
-      setTotalPages(response.data.totalPages);
-    } catch (error) {
-      console.error("Failed to fetch blogs:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

@@ -16,13 +16,54 @@ import {
   ExternalLink,
 } from "lucide-react";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 const Footer = () => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const colorOptions = [
+    "bg-red-500",
+    "bg-blue-500",
+    "bg-green-500",
+    "bg-yellow-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-indigo-500",
+    "bg-orange-500",
+    "bg-teal-500",
+    "bg-cyan-500",
+    "bg-lime-500",
+    "bg-emerald-500",
+    "bg-violet-500",
+    "bg-fuchsia-500",
+    "bg-rose-500",
+  ];
+
+  const getRandomColor = () => {
+    return colorOptions[Math.floor(Math.random() * colorOptions.length)];
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+        );
+        const categoriesWithColors = response.data.categories.map(
+          (category) => ({
+            ...category,
+            randomColor: getRandomColor(),
+          }),
+        );
+        setCategories(categoriesWithColors);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -34,49 +75,13 @@ const Footer = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("/categories");
-      setCategories(response.data.categories);
-    } catch (error) {
-      toast.error("Failed to fetch categories");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const blogCategories = [
-    { name: "Technology", count: 42, color: "bg-blue-500" },
-    { name: "Web Development", count: 28, color: "bg-purple-500" },
-    { name: "Design", count: 35, color: "bg-pink-500" },
-    { name: "Business", count: 19, color: "bg-green-500" },
-    { name: "Lifestyle", count: 24, color: "bg-yellow-500" },
-    { name: "Tutorials", count: 31, color: "bg-red-500" },
-  ];
-
   const quickLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Blog Posts", href: "/blog" },
-    { name: "Categories", href: "/categories" },
     { name: "Authors", href: "/authors" },
     { name: "Contact", href: "/contact" },
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
     { name: "Sitemap", href: "/sitemap" },
-  ];
-
-  const recentPosts = [
-    { title: "Mastering Next.js 14", date: "2 days ago", views: "1.2k" },
-    { title: "CSS Grid vs Flexbox", date: "1 week ago", views: "2.4k" },
-    { title: "React Performance Tips", date: "2 weeks ago", views: "3.1k" },
-    { title: "Building REST APIs", date: "3 weeks ago", views: "1.8k" },
   ];
 
   const socialLinks = [
@@ -175,9 +180,9 @@ const Footer = () => {
               Top Categories
             </h3>
             <div className="space-y-3">
-              {blogCategories.map((category, index) => (
+              {categories.map((category) => (
                 <Link
-                  key={index}
+                  key={category._id}
                   href={`/category/${category.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
@@ -185,7 +190,7 @@ const Footer = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-3 h-3 rounded-full ${category.color} animate-pulse`}
+                      className={`w-3 h-3 rounded-full ${category.randomColor} animate-pulse`}
                     />
                     <span className="text-gray-300 group-hover:text-white transition-colors duration-300">
                       {category.name}
