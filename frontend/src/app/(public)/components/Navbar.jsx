@@ -3,9 +3,8 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, XCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const navItems = [
@@ -17,13 +16,19 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const pathname = usePathname();
+  const sideMenuRef = useRef();
   const router = useRouter();
-
   const { user, logout } = useAuth();
+
+  const openMenu = () => {
+    sideMenuRef.current.style.transform = "translateX(16rem)";
+  };
+
+  const closeMenu = () => {
+    sideMenuRef.current.style.transform = "translateX(-16rem)";
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,7 +44,6 @@ export default function Navbar() {
   // Handle logout
   const handleLogout = async () => {
     setProfileDropdownOpen(false);
-    setMobileMenuOpen(false);
     await logout();
   };
 
@@ -55,38 +59,22 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <div className="md:hidden flex">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={openMenu}
               className="cursor-pointer text-gray-700 hover:text-indigo-600 focus:outline-none"
             >
-              {mobileMenuOpen ? (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
             </button>
           </div>
           {/* Logo */}
@@ -199,31 +187,37 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-2">
-            <Link
-              href="/"
-              className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg"
-              onClick={() => setMobileMenuOpen(false)}
+
+        <div
+          ref={sideMenuRef}
+          className="md:hidden fixed -left-64 top-0 w-50 z-50 bg-rose-50 duration-400 space-y-2 rounded-br-lg"
+        >
+          <div className="flex justify-between items-center px-4 py-3 bg-amber-300">
+            <span className="text-xl font-bold text-gray-800">Menu</span>
+
+            <button
+              className="cursor-pointer text-indigo-600 hover:text-red-500"
+              onClick={closeMenu}
             >
-              Home
-            </Link>
-            <Link
-              href="/blogs"
-              className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Blogs
-            </Link>
-            <Link
-              href="/about"
-              className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About
-            </Link>
+              <XCircle />
+            </button>
           </div>
-        )}
+          <div className="pb-4 ">
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.path}
+                onClick={(e) => {
+                  handleNavClick(e, item.path);
+                  closeMenu();
+                }}
+                className="block px-4 py-3 text-indigo-600 hover:bg-red-100"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </nav>
     </header>
   );

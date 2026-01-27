@@ -301,39 +301,6 @@ exports.updateBlog = async (req, res) => {
       }
     }
 
-    // Handle image upload if new image provided
-    // let imageUrl = blog.image;
-    // if (req.body.image && req.body.image !== blog.image) {
-    //   try {
-    //     // Delete old image from cloudinary
-    //     if (blog.image) {
-    //       const publicId = blog.image.split("/").pop().split(".")[0];
-    //       await cloudinary.uploader.destroy(`blog-images/${publicId}`);
-    //     }
-
-    //     // Upload new image
-    //     const uploadResponse = await cloudinary.uploader.upload(
-    //       req.body.image,
-    //       {
-    //         folder: "blog-images",
-    //         transformation: [
-    //           { width: 1200, height: 630, crop: "limit" },
-    //           { quality: "auto" },
-    //         ],
-    //       }
-    //     );
-    //     imageUrl = uploadResponse.secure_url;
-    //   } catch (error) {
-    //     return res.status(400).json({
-    //       success: false,
-    //       message: "Image upload failed",
-    //       error: error.message,
-    //     });
-    //   }
-    // }
-
-    // In blogController.js - updateBlog function
-    // Update the image handling section:
 
     let imageUrl = blog.image;
     if (req.body.image && req.body.image !== blog.image) {

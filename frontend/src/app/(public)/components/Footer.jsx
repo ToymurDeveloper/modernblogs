@@ -217,7 +217,7 @@ const Footer = () => {
                 <div>
                   <p className="text-white font-medium">Our Location</p>
                   <p className="text-gray-400 text-sm">
-                    Bashundhara City, Dhaka.
+                    Glen Innes, northeastern New South Wales, Australia.
                   </p>
                 </div>
               </div>
@@ -230,7 +230,7 @@ const Footer = () => {
                     href="mailto:hello@bloghub.com"
                     className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
                   >
-                    sktaimur296@gmail.com
+                    justin485@gmail.com
                   </a>
                 </div>
               </div>
@@ -243,7 +243,7 @@ const Footer = () => {
                     href="tel:+11234567890"
                     className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
                   >
-                    +880 1914 653199
+                    +61 482 376 557
                   </a>
                 </div>
               </div>
@@ -256,7 +256,8 @@ const Footer = () => {
                 {socialLinks.map((social, index) => (
                   <a
                     key={index}
-                    href={social.href}
+                    // href={social.href}
+                    href="/"
                     className={`w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 group`}
                     aria-label={social.name}
                     target="_blank"
@@ -272,23 +273,11 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-600 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <div className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Explorer. All rights reserved.
             </div>
-
-            <div className="flex justify-center">
-              <div className="inline-flex items-center gap-4 bg-gray-800/50 px-6 py-2 rounded-full hover:bg-gray-800/70 transition-all duration-300">
-                <select className="bg-transparent text-gray-400 text-sm focus:outline-none cursor-pointer hover:text-white transition-colors duration-300">
-                  <option value="en">English</option>
-                  <option value="es">Español</option>
-                  <option value="fr">Français</option>
-                  <option value="de">Deutsch</option>
-                </select>
-                <div className="w-px h-4 bg-gray-700" />
-              </div>
-            </div>
-
+            <div id="google_translate_element"></div>
             <div className="text-gray-500 text-sm flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               Server Status: <span className="text-green-400">Operational</span>
