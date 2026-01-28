@@ -94,14 +94,6 @@ export default function CategoryPageClient({ params }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (loading && currentPage === 1) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -154,8 +146,22 @@ export default function CategoryPageClient({ params }) {
           {/* Main Content - Blog Cards */}
           <div className="lg:col-span-2">
             {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((item) => (
+                  <div
+                    key={item}
+                    className="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col animate-pulse"
+                  >
+                    <div className="w-full h-48 bg-gray-200"></div>
+                    <div className="p-4 flex flex-col grow">
+                      <div className="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
+                      <div className="h-4 bg-gray-200 rounded mb-2 w-1/2"></div>
+                      <div className="mt-auto space-y-2">
+                        <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : blogs.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-lg shadow-sm">
