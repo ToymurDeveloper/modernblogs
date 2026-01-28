@@ -4,17 +4,11 @@ export function middleware(request) {
   const token = request.cookies.get("accessToken")?.value;
   const { pathname } = request.nextUrl;
 
-  // Public routes (accessible to everyone)
-  const publicRoutes = [
-    "/",
-    "/login",
-    "/register",
-    "/forgot-password",
-    "/reset-password",
-  ];
+  // Protected routes (only accessible with authentication)
+  const protectedRoutes = ["/admin", "/dashboard", "/profile"];
 
-  const isPublicRoute = publicRoutes.some((route) =>
-    pathname.startsWith(route)
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route),
   );
 
   // Auth callback route
@@ -22,12 +16,12 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  // If user is not authenticated and trying to access protected route
-  if (!token && !isPublicRoute) {
+  // Redirect to login if accessing protected route without token
+  if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If user is authenticated and trying to access auth pages (EXCEPT "/")
+  // If user is authenticated and trying to access auth pages
   const authPages = [
     "/login",
     "/register",
@@ -37,10 +31,10 @@ export function middleware(request) {
   const isAuthPage = authPages.some((page) => pathname.startsWith(page));
 
   if (token && isAuthPage) {
-    // Only redirect from actual auth pages
     return NextResponse.redirect(new URL("/", request.url));
   }
 
+  // Let everything else through (including 404s)
   return NextResponse.next();
 }
 

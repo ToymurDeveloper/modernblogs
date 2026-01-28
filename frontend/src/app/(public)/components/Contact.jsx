@@ -71,7 +71,7 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   disabled={loading}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                  className="w-full px-4 py-2 placeholder:text-indigo-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                   placeholder="Your name"
                 />
               </div>
@@ -85,8 +85,8 @@ export default function ContactPage() {
                   value={formData.email}
                   onChange={handleChange}
                   disabled={loading}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
-                  placeholder="Email address"
+                  className="w-full px-4 py-2 placeholder:text-indigo-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                  placeholder="Your email address"
                 />
               </div>
 
@@ -99,7 +99,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   disabled={loading}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                  className="w-full px-4 py-2 placeholder:text-indigo-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                   placeholder="Your message..."
                 />
               </div>
