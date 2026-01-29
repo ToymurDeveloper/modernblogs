@@ -18,7 +18,6 @@ export default function BlogsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
 
- 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -64,7 +63,7 @@ export default function BlogsPage() {
       try {
         const params = {
           page: currentPage,
-          limit: 9,
+          limit: 3,
           status: "published",
           ...(selectedCategory && { category: selectedCategory }),
         };

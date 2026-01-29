@@ -230,7 +230,7 @@ const Footer = () => {
                     href="mailto:hello@bloghub.com"
                     className="text-gray-400 text-sm hover:text-white transition-colors duration-300"
                   >
-                    justin485@gmail.com
+                    justin839@gmail.com
                   </a>
                 </div>
               </div>
