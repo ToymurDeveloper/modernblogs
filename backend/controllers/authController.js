@@ -231,7 +231,7 @@ exports.logout = async (req, res) => {
     if (!req.user) {
       return res.status(200).json({
         success: true,
-        message: "You are already logged out from another window",
+        message: "You are already logged out",
         alreadyLoggedOut: true,
       });
     }
