@@ -63,7 +63,7 @@ export default function BlogsPage() {
       try {
         const params = {
           page: currentPage,
-          limit: 3,
+          limit: 9,
           status: "published",
           ...(selectedCategory && { category: selectedCategory }),
         };
