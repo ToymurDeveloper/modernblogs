@@ -93,7 +93,7 @@ export default function SingleBlogClient({ params }) {
 
   if (loading) {
     return (
-      <div className="bg-white mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="bg-white grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {[1, 2, 3, 4, 5, 6].map((item) => (
           <div
             key={item}
