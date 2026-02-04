@@ -79,9 +79,10 @@ const Footer = () => {
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Blog Posts", href: "/blog" },
-    { name: "Authors", href: "/authors" },
     { name: "Contact", href: "/contact" },
     { name: "Sitemap", href: "/sitemap" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms and Conditions", href: "/terms" },
   ];
 
   const socialLinks = [
@@ -153,12 +154,12 @@ const Footer = () => {
           </div>
 
           {/* Column 2: Quick Links */}
-          <div>
+          <div className="lg:pl-10">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               Quick Links
               <ExternalLink className="w-4 h-4" />
             </h3>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
               {quickLinks.map((link, index) => (
                 <Link
                   key={index}
@@ -251,7 +252,7 @@ const Footer = () => {
 
             {/* Social Media */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Follow Us</h4>
+              <h4 className="font-semibold text-white mb-4">Let's Connect!</h4>
               <div className="flex flex-wrap gap-3">
                 {socialLinks.map((social, index) => (
                   <a

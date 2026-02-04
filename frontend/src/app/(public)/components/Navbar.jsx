@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LogOut, User, XCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -20,7 +20,15 @@ export default function Navbar() {
   const dropdownRef = useRef(null);
   const sideMenuRef = useRef();
   const router = useRouter();
+  const pathname = usePathname();
   const { user, logout } = useAuth();
+
+  const isActive = (path) => {
+    if (path === "/") {
+      return pathname === path;
+    }
+    return pathname.startsWith(path);
+  };
 
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(16rem)";
@@ -94,7 +102,11 @@ export default function Navbar() {
                 key={index}
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className="text-gray-700 hover:text-indigo-600 transition duration-150"
+                className={`transition duration-150 ${
+                  isActive(item.path)
+                    ? "text-orange-600 border-b-2 border-orange-600"
+                    : "text-gray-700 hover:text-orange-600"
+                }`}
               >
                 {item.name}
               </Link>
@@ -190,7 +202,7 @@ export default function Navbar() {
 
         <div
           ref={sideMenuRef}
-          className="md:hidden fixed -left-64 top-0 w-50 z-50 bg-rose-50 duration-400 space-y-2 rounded-br-lg"
+          className="md:hidden fixed -left-64 top-0 w-50 h-full z-50 bg-rose-50 duration-400 space-y-2 rounded-br-lg"
         >
           <div className="flex justify-between items-center px-4 py-3 bg-amber-300">
             <span className="text-xl font-bold text-gray-800">Menu</span>
@@ -211,7 +223,11 @@ export default function Navbar() {
                   handleNavClick(e, item.path);
                   closeMenu();
                 }}
-                className="block px-4 py-3 text-indigo-600 hover:bg-red-100"
+                className={`block px-4 py-3 transition-colors ${
+                  isActive(item.path)
+                    ? "bg-indigo-100 text-indigo-700 font-semibold border-l-4 border-indigo-600"
+                    : "text-indigo-600 hover:bg-red-100"
+                }`}
               >
                 {item.name}
               </Link>

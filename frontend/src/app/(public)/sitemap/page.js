@@ -9,9 +9,9 @@ import {
   FolderOpen,
   Tag,
   TrendingUp,
-  Star,
   Calendar,
   ChevronRight,
+  Flame,
 } from "lucide-react";
 
 export default function SitemapPage() {
@@ -220,7 +220,7 @@ export default function SitemapPage() {
                                   <TrendingUp className="w-4 h-4 text-red-500" />
                                 )}
                                 {blog.isPopular && (
-                                  <Star className="w-4 h-4 text-yellow-500" />
+                                  <Flame className="w-4 h-4 text-orange-500" />
                                 )}
                               </div>
                             </div>
