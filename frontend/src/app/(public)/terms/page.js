@@ -631,7 +631,7 @@ export default function TermsAndConditionsPage() {
         {/* Navigation Links */}
         <div className="mt-8 text-center space-x-4">
           <Link
-            href="/privacy-policy"
+            href="/privacy"
             className="text-indigo-600 hover:text-indigo-800 font-semibold"
           >
             ← View Privacy Policy
