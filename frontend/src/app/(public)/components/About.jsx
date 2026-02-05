@@ -103,30 +103,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-indigo-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-5xl font-bold mb-2">10K+</div>
-              <div className="text-lg">Active Bloggers</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">50K+</div>
-              <div className="text-lg">Published Articles</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">1M+</div>
-              <div className="text-lg">Monthly Readers</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">99%</div>
-              <div className="text-lg">Satisfaction Rate</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
