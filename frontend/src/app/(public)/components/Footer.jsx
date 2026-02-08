@@ -177,7 +177,7 @@ const Footer = () => {
           </div>
 
           {/* Column 3: Categories */}
-          <div>
+          <div className="mb-2">
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Top Categories
