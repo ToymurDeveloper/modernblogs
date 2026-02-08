@@ -180,7 +180,7 @@ const Footer = () => {
           <div className="mb-2">
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
-              Top Categories
+              Latest Posts
             </h3>
             <div className="space-y-2">
               {categories.map((category) => (
@@ -205,13 +205,13 @@ const Footer = () => {
           </div>
 
           {/* Column 4: Contact & Social */}
-          <div>
+          <div className="mb-2">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <Phone className="w-5 h-5" />
               Contact Info
             </h3>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4">
               <div className="flex items-start gap-3 group">
                 <MapPin className="w-5 h-5 text-blue-400 mt-1 group-hover:scale-110 transition-transform duration-300" />
                 <div>
@@ -293,23 +293,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in-up {
-          animation: fadeInUp 0.3s ease-out forwards;
-        }
-      `}</style>
     </footer>
   );
 };
