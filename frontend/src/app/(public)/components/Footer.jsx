@@ -77,8 +77,8 @@ const Footer = () => {
 
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
     { name: "Blog Posts", href: "/blog" },
+    { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Sitemap", href: "/sitemap" },
     { name: "Privacy Policy", href: "/privacy" },
@@ -97,7 +97,6 @@ const Footer = () => {
     { icon: Linkedin, name: "LinkedIn", href: "#", color: "hover:bg-blue-700" },
     { icon: Youtube, name: "YouTube", href: "#", color: "hover:bg-red-600" },
     { icon: Github, name: "GitHub", href: "#", color: "hover:bg-green-500" },
-    { icon: Rss, name: "RSS Feed", href: "/rss", color: "hover:bg-orange-500" },
   ];
 
   return (
@@ -107,6 +106,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Brand & Description */}
           <div className="lg:col-span-1">
+            <Link href="/" >
+              <div className="px-2.5 py-1 bg-indigo-600 rounded-lg">
+                <span className="text-white font-bold text-xl">DailyMart</span>
+              </div>
+            </Link>
             <div className="mb-6">
               <p className="mt-4 text-gray-400 leading-relaxed">
                 Your daily dose of technology, web development, and design
@@ -150,27 +154,6 @@ const Footer = () => {
                   <span className="text-green-400">✓ Welcome aboard!</span>
                 )}
               </p>
-            </div>
-          </div>
-
-          {/* Column 2: Quick Links */}
-          <div className="lg:pl-10">
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              Quick Links
-              <ExternalLink className="w-4 h-4" />
-            </h3>
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-              {quickLinks.map((link, index) => (
-                <Link
-                  key={index}
-                  href={link.href}
-                  className="text-gray-400 hover:text-white hover:bg-gray-800/50 p-2 rounded-lg transition-all duration-300 group"
-                >
-                  <span className="group-hover:translate-x-1 transition-transform duration-300 block">
-                    {link.name}
-                  </span>
-                </Link>
-              ))}
             </div>
           </div>
 
@@ -249,7 +232,29 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+          </div>
 
+          <div>
+            {/* Column 2: Quick Links */}
+            <div className="lg:pl-10">
+              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                Quick Links
+                <ExternalLink className="w-4 h-4" />
+              </h3>
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+                {quickLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    className="text-gray-400 hover:text-white hover:bg-gray-800/50 p-2 rounded-lg transition-all duration-300 group"
+                  >
+                    <span className="group-hover:translate-x-1 transition-transform duration-300 block">
+                      {link.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
             {/* Social Media */}
             <div>
               <h4 className="font-semibold text-white mb-4">Let's Connect!</h4>
