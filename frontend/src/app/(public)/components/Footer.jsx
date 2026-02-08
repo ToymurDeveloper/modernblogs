@@ -77,7 +77,7 @@ const Footer = () => {
 
   const quickLinks = [
     { name: "Home", href: "/" },
-    { name: "Blog Posts", href: "/blog" },
+    { name: "Blog Posts", href: "/blogs" },
     { name: "About Us", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Sitemap", href: "/sitemap" },
@@ -107,11 +107,11 @@ const Footer = () => {
           {/* Column 1: Brand & Description */}
           <div className="lg:col-span-1">
             <Link href="/">
-              <div className="px-2.5 py-1 bg-indigo-600 rounded-lg">
+              <div className="inline-block px-2.5 py-1 bg-indigo-600 rounded-lg">
                 <span className="text-white font-bold text-xl">DailyMart</span>
               </div>
             </Link>
-            <div className="mb-6">
+            <div className="mb-4">
               <p className="mt-4 text-gray-400 leading-relaxed">
                 Your daily dose of technology, web development, and design
                 insights. We help developers and designers stay updated with the
@@ -119,7 +119,7 @@ const Footer = () => {
               </p>
             </div>
             {/* Social Media */}
-            <div>
+            <div className="mb-2">
               <h4 className="font-semibold text-white mb-4">Let's Connect!</h4>
               <div className="flex flex-wrap gap-3">
                 {socialLinks.map((social, index) => (
@@ -178,11 +178,11 @@ const Footer = () => {
 
           {/* Column 3: Categories */}
           <div>
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Top Categories
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {categories.map((category) => (
                 <Link
                   key={category._id}
@@ -252,11 +252,11 @@ const Footer = () => {
 
           {/* Column 2: Quick Links */}
           <div className="lg:pl-10">
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               Quick Links
               <ExternalLink className="w-4 h-4" />
             </h3>
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
               {quickLinks.map((link, index) => (
                 <Link
                   key={index}
