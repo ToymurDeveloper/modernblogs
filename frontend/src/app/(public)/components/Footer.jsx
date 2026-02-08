@@ -106,7 +106,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1: Brand & Description */}
           <div className="lg:col-span-1">
-            <Link href="/" >
+            <Link href="/">
               <div className="px-2.5 py-1 bg-indigo-600 rounded-lg">
                 <span className="text-white font-bold text-xl">DailyMart</span>
               </div>
@@ -180,9 +180,6 @@ const Footer = () => {
                       {category.name}
                     </span>
                   </div>
-                  <span className="px-2 py-1 bg-gray-900 text-xs rounded transition-all duration-300 group-hover:bg-gray-800">
-                    {category.count}
-                  </span>
                 </Link>
               ))}
             </div>
@@ -280,13 +277,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-600 pt-8">
           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            <div className="text-gray-500 text-sm">
+            <div className="text-gray-300 text-sm">
               © {new Date().getFullYear()} Explorer. All rights reserved.
             </div>
             <div id="google_translate_element"></div>
             <div className="text-gray-500 text-sm flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Server Status: <span className="text-green-400">Operational</span>
+              <Link href="privacy" className="text-gray-300">Privacy Policy</Link>
+              <Link href="terms" className="text-gray-300">Terms</Link>
+              <Link href="contact" className="text-gray-300">Contact</Link>
             </div>
           </div>
         </div>
