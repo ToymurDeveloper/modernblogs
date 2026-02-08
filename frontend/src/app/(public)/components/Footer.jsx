@@ -118,9 +118,28 @@ const Footer = () => {
                 latest trends.
               </p>
             </div>
+            {/* Social Media */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Let's Connect!</h4>
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    // href={social.href}
+                    href="/"
+                    className={`w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 group`}
+                    aria-label={social.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <social.icon className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors duration-300" />
+                  </a>
+                ))}
+              </div>
+            </div>
 
             {/* Newsletter Subscription */}
-            <div className="bg-gray-800/50 rounded-xl p-6">
+            {/* <div className="bg-gray-800/50 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-white mb-3">
                 Stay Updated
               </h3>
@@ -154,7 +173,7 @@ const Footer = () => {
                   <span className="text-green-400">✓ Welcome aboard!</span>
                 )}
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Column 3: Categories */}
@@ -231,45 +250,24 @@ const Footer = () => {
             </div>
           </div>
 
-          <div>
-            {/* Column 2: Quick Links */}
-            <div className="lg:pl-10">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                Quick Links
-                <ExternalLink className="w-4 h-4" />
-              </h3>
-              <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-                {quickLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link.href}
-                    className="text-gray-400 hover:text-white hover:bg-gray-800/50 p-2 rounded-lg transition-all duration-300 group"
-                  >
-                    <span className="group-hover:translate-x-1 transition-transform duration-300 block">
-                      {link.name}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            {/* Social Media */}
-            <div>
-              <h4 className="font-semibold text-white mb-4">Let's Connect!</h4>
-              <div className="flex flex-wrap gap-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    // href={social.href}
-                    href="/"
-                    className={`w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center ${social.color} transition-all duration-300 hover:scale-110 group`}
-                    aria-label={social.name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <social.icon className="w-5 h-5 text-gray-300 group-hover:text-white transition-colors duration-300" />
-                  </a>
-                ))}
-              </div>
+          {/* Column 2: Quick Links */}
+          <div className="lg:pl-10">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              Quick Links
+              <ExternalLink className="w-4 h-4" />
+            </h3>
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+              {quickLinks.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className="text-gray-400 hover:text-white hover:bg-gray-800/50 p-2 rounded-lg transition-all duration-300 group"
+                >
+                  <span className="group-hover:translate-x-1 transition-transform duration-300 block">
+                    {link.name}
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -277,14 +275,20 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-600 pt-8">
           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+            <div id="google_translate_element"></div>
+            <div className="text-gray-500 text-sm flex items-center gap-3">
+              <Link href="privacy" className="text-gray-300">
+                Privacy Policy
+              </Link>
+              <Link href="terms" className="text-gray-300">
+                Terms
+              </Link>
+              <Link href="contact" className="text-gray-300">
+                Contact
+              </Link>
+            </div>
             <div className="text-gray-300 text-sm">
               © {new Date().getFullYear()} Explorer. All rights reserved.
-            </div>
-            <div id="google_translate_element"></div>
-            <div className="text-gray-500 text-sm flex items-center gap-2">
-              <Link href="privacy" className="text-gray-300">Privacy Policy</Link>
-              <Link href="terms" className="text-gray-300">Terms</Link>
-              <Link href="contact" className="text-gray-300">Contact</Link>
             </div>
           </div>
         </div>
