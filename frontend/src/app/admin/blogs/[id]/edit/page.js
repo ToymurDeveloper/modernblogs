@@ -1,5 +1,5 @@
 "use client";
-
+import "../../../../styles/tiptap.css";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, useParams } from "next/navigation";
@@ -7,8 +7,17 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
-const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
-
+const TiptapEditor = dynamic(
+  () => import("../../../../(public)/components/TiptapEditor"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="border border-gray-300 rounded-md p-4 min-h-75 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    ),
+  },
+);
 export default function EditBlogPage() {
   const editor = useRef(null);
   const [formData, setFormData] = useState({
@@ -40,48 +49,6 @@ export default function EditBlogPage() {
   const router = useRouter();
   const params = useParams();
   const blogId = params.id;
-
-  const config = useMemo(
-    () => ({
-      readonly: false,
-      placeholder: "Start writing your blog content...",
-      minHeight: 400,
-      uploader: {
-        insertImageAsBase64URI: true,
-      },
-      buttons: [
-        "bold",
-        "italic",
-        "underline",
-        "strikethrough",
-        "|",
-        "ul",
-        "ol",
-        "|",
-        "font",
-        "fontsize",
-        "brush",
-        "paragraph",
-        "|",
-        "image",
-        "table",
-        "link",
-        "|",
-        "align",
-        "undo",
-        "redo",
-        "|",
-        "hr",
-        "eraser",
-        "copyformat",
-        "|",
-        "symbol",
-        "fullsize",
-        "preview",
-      ],
-    }),
-    []
-  );
 
   useEffect(() => {
     if (!user || (user.role !== "admin" && user.role !== "subadmin")) {
@@ -142,12 +109,20 @@ export default function EditBlogPage() {
     });
   };
 
+  //
+  const handleContentChange = (html) => {
+    setFormData({
+      ...formData,
+      content: html,
+    });
+  };
+
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append(
       "upload_preset",
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
     );
 
     const response = await fetch(
@@ -155,7 +130,7 @@ export default function EditBlogPage() {
       {
         method: "POST",
         body: formData,
-      }
+      },
     );
 
     const data = await response.json();
@@ -260,7 +235,7 @@ export default function EditBlogPage() {
       return;
     }
 
-    if (!formData.content.trim()) {
+    if (!formData.content.trim() || formData.content === "<p></p>") {
       toast.error("Content is required");
       return;
     }
@@ -420,7 +395,7 @@ export default function EditBlogPage() {
                     accept="image/*"
                     onChange={handleImageChange}
                     disabled={updating}
-                    className="cursor-pointer w-full px-3 file:py-2 file:border-r-2 text-gray-800 file:bg-indigo-50 file:hover:bg-indigo-100 file:border-gray-300 file:mr-3 file:pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                    className="cursor-pointer w-full file:px-3 file:py-2 file:border-r-2 text-gray-800 file:bg-indigo-50 file:hover:bg-indigo-100 file:border-gray-300 file:mr-3 file:pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                   />
                   <p className="mt-1 text-sm text-gray-500">
                     Leave empty to keep current image
@@ -513,13 +488,10 @@ export default function EditBlogPage() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Content *
               </h2>
-              <JoditEditor
-                ref={editor}
-                value={formData.content}
-                config={config}
-                onBlur={(newContent) =>
-                  setFormData({ ...formData, content: newContent })
-                }
+              <TiptapEditor
+                content={formData.content}
+                onChange={handleContentChange}
+                disabled={loading}
               />
             </div>
 

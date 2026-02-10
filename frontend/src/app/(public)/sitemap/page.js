@@ -132,7 +132,9 @@ export default function SitemapPage() {
                 {categories.map((category) => (
                   <li key={category._id}>
                     <Link
-                      href={`/blogs?category=${category._id}`}
+                      href={`/category/${category.name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                       className="flex items-center gap-2 text-gray-700 hover:text-green-600 transition-colors group"
                     >
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

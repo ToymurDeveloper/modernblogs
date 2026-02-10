@@ -1,17 +1,25 @@
 "use client";
-
-import { useState, useEffect, useRef, useMemo } from "react";
+import "../../../../app/styles/tiptap.css";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
-// Dynamically import JoditEditor to avoid SSR issues
-const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
+const TiptapEditor = dynamic(
+  () => import("../../../(public)/components/TiptapEditor"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="border border-gray-300 rounded-md p-4 min-h-75 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    ),
+  },
+);
 
 export default function CreateBlogPage() {
-  const editor = useRef(null);
   const [formData, setFormData] = useState({
     title: "",
     subTitle: "",
@@ -38,48 +46,6 @@ export default function CreateBlogPage() {
   const { user, axiosInstance } = useAuth();
   const router = useRouter();
 
-  const config = useMemo(
-    () => ({
-      readonly: false,
-      placeholder: "Start writing your blog content...",
-      minHeight: 400,
-      uploader: {
-        insertImageAsBase64URI: true,
-      },
-      buttons: [
-        "bold",
-        "italic",
-        "underline",
-        "strikethrough",
-        "|",
-        "ul",
-        "ol",
-        "|",
-        "font",
-        "fontsize",
-        "brush",
-        "paragraph",
-        "|",
-        "image",
-        "table",
-        "link",
-        "|",
-        "align",
-        "undo",
-        "redo",
-        "|",
-        "hr",
-        "eraser",
-        "copyformat",
-        "|",
-        "symbol",
-        "fullsize",
-        "preview",
-      ],
-    }),
-    [],
-  );
-
   useEffect(() => {
     if (!user || (user.role !== "admin" && user.role !== "subadmin")) {
       router.push("/");
@@ -104,6 +70,14 @@ export default function CreateBlogPage() {
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  //
+  const handleContentChange = (html) => {
+    setFormData({
+      ...formData,
+      content: html,
     });
   };
 
@@ -202,7 +176,7 @@ export default function CreateBlogPage() {
       return;
     }
 
-    if (!formData.content.trim()) {
+    if (!formData.content.trim() || formData.content === "<p></p>") {
       toast.error("Content is required");
       return;
     }
@@ -363,7 +337,7 @@ export default function CreateBlogPage() {
                     accept="image/*"
                     onChange={handleImageChange}
                     disabled={loading || imageUploading}
-                    className="cursor-pointer w-full px-3 file:py-2 file:border-r-2 text-gray-800 file:bg-indigo-50 file:hover:bg-indigo-100 file:border-gray-300 file:mr-3 file:pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+                    className="cursor-pointer w-full file:px-3 file:py-2 file:border-r-2 text-gray-800 file:bg-indigo-50 file:hover:bg-indigo-100 file:border-gray-300 file:mr-3 file:pr-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
                   />
 
                   {imageUploading && (
@@ -454,13 +428,10 @@ export default function CreateBlogPage() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Content *
               </h2>
-              <JoditEditor
-                ref={editor}
-                value={formData.content}
-                config={config}
-                onBlur={(newContent) =>
-                  setFormData({ ...formData, content: newContent })
-                }
+              <TiptapEditor
+                content={formData.content}
+                onChange={handleContentChange}
+                disabled={loading}
               />
             </div>
 
@@ -730,7 +701,7 @@ export default function CreateBlogPage() {
               <button
                 type="submit"
                 disabled={loading || imageUploading}
-                className="px-6 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                className="cursor-pointer px-6 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               >
                 {loading ? (
                   <>
