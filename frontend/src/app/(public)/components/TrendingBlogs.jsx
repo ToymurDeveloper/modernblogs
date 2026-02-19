@@ -18,14 +18,11 @@ export default function TrendingBlogs({ blogs }) {
             key={blog._id}
             className="border-b border-gray-300 pb-2 last:border-b-0 last:pb-0"
           >
-            <div className="flex justify-between items-center gap-2">
-              <Link href={`/blogs/${blog.slug}`}>
+            <Link href={`/blogs/${blog.slug}`}>
+              <div className="flex justify-between items-center gap-2">
                 <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-3 leading-relaxed">
                   {blog.title}
                 </h3>
-              </Link>
-
-              <Link href={`/blogs/${blog.slug}`}>
                 <div className="relative w-24 h-18 shrink-0 rounded-sm overflow-hidden">
                   <Image
                     src={blog.image}
@@ -37,8 +34,8 @@ export default function TrendingBlogs({ blogs }) {
                     quality={80}
                   />
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
             <Link
               href={`/blogs/${blog.slug}`}
               className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors group"
