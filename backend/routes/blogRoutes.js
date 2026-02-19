@@ -14,6 +14,7 @@ const {
   getPopularBlogs,
   getPublicBlogBySlug,
   getBlogsByTag,
+  getLatestBlogs,
 } = require("../controllers/publicBlogController");
 const { protect, authorize } = require("../middleware/auth");
 
@@ -25,6 +26,7 @@ router.get("/trending", getTrendingBlogs);
 router.get("/popular", getPopularBlogs);
 router.get("/public/:slug", getPublicBlogBySlug);
 router.get("/tag/:tag", getBlogsByTag);
+router.get("/latest", getLatestBlogs);
 // router.get("/related/:slug", getRelatedBlogs);
 
 router.get("/", protect, getAllBlogs);

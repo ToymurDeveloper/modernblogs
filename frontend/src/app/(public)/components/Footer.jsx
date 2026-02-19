@@ -11,14 +11,13 @@ import {
   Linkedin,
   Youtube,
   Github,
-  Rss,
   BookOpen,
   ExternalLink,
 } from "lucide-react";
 import axios from "axios";
 
 const Footer = () => {
-  const [categories, setCategories] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -45,24 +44,22 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchLatestBlogs = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/latest?limit=5&status=published`,
         );
-        const categoriesWithColors = response.data.categories.map(
-          (category) => ({
-            ...category,
-            randomColor: getRandomColor(),
-          }),
-        );
-        setCategories(categoriesWithColors);
+        const blogsWithColors = response.data.blogs.map((blog) => ({
+          ...blog,
+          randomColor: getRandomColor(),
+        }));
+        setBlogs(blogsWithColors);
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
+        console.error("Failed to fetch latest blogs:", error);
       }
     };
 
-    fetchCategories();
+    fetchLatestBlogs();
   }, []);
 
   const handleSubscribe = (e) => {
@@ -183,20 +180,18 @@ const Footer = () => {
               Latest Posts
             </h3>
             <div className="space-y-2">
-              {categories.map((category) => (
+              {blogs.map((blog) => (
                 <Link
-                  key={category._id}
-                  href={`/category/${category.name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
+                  key={blog._id}
+                  href={`/blogs/${blog.slug}`}
                   className="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg hover:bg-gray-800/60 transition-all duration-300 group"
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-3 h-3 rounded-full ${category.randomColor} animate-pulse`}
+                      className={`w-3 h-3 rounded-full shrink-0 ${blog.randomColor} animate-pulse`}
                     />
-                    <span className="text-gray-300 group-hover:text-white transition-colors duration-300">
-                      {category.name}
+                    <span className="line-clamp-1 leading-relaxed text-gray-300 group-hover:text-white transition-colors duration-300">
+                      {blog.title}
                     </span>
                   </div>
                 </Link>

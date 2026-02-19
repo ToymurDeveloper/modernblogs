@@ -177,3 +177,26 @@ exports.getBlogsByTag = async (req, res) => {
   }
 };
 
+exports.getLatestBlogs = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 5;
+
+    const blogs = await Blog.find({ status: "published" })
+      .populate("category", "name slug")
+      .populate("author", "name email")
+      .sort({ createdAt: -1, publishedAt: -1 })
+      .limit(limit)
+      .select("title slug image authorDisplayName publishedAt createdAt");
+
+    res.json({
+      success: true,
+      blogs,
+    });
+  } catch (error) {
+    console.error("Get latest public blogs error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch latest blogs",
+    });
+  }
+};

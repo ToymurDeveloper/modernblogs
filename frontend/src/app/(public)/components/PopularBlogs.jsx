@@ -1,4 +1,5 @@
 import { ArrowRight, Flame } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function PopularBlogs({ blogs }) {
@@ -17,10 +18,27 @@ export default function PopularBlogs({ blogs }) {
             key={blog._id}
             className="border-b border-gray-300 pb-2 last:border-b-0 last:pb-0"
           >
-            <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-3 leading-relaxed">
-              {blog.title}
-            </h3>
+            <div className="flex justify-between items-center gap-2">
+              <Link href={`/blogs/${blog.slug}`}>
+                <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-3 leading-relaxed">
+                  {blog.title}
+                </h3>
+              </Link>
 
+              <Link href={`/blogs/${blog.slug}`}>
+                <div className="relative w-24 h-18 shrink-0 rounded-sm overflow-hidden">
+                  <Image
+                    src={blog.image}
+                    alt={blog.title}
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                    loading="lazy"
+                    quality={80}
+                  />
+                </div>
+              </Link>
+            </div>
             <Link
               href={`/blogs/${blog.slug}`}
               className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors group"
