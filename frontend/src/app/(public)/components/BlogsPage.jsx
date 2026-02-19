@@ -100,8 +100,8 @@ export default function BlogsPage() {
         {/* Category Tabs */}
         <div className="mb-8">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[1, 2].map((item) => (
+            <div className="grid gap-6">
+              {[1].map((item) => (
                 <div
                   key={item}
                   className="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col animate-pulse"
