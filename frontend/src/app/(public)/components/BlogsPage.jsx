@@ -99,31 +99,48 @@ export default function BlogsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Category Tabs */}
         <div className="mb-8">
-          <div className="flex items-center space-x-8 border-b-2 pb-4 border-gray-300 overflow-x-auto">
-            <button
-              onClick={() => handleCategoryChange("")}
-              className={`cursor-pointer text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
-                selectedCategory === ""
-                  ? "border-orange-500 text-orange-500"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-blue-400"
-              }`}
-            >
-              All
-            </button>
-            {categories.map((category) => (
+          {loading ? (
+            <div className="grid grid-cols-1 gap-6">
+              {[1].map((item) => (
+                <div
+                  key={item}
+                  className="bg-white rounded-lg overflow-hidden shadow-sm h-full flex flex-col animate-pulse"
+                >
+                  <div className="w-full bg-gray-200"></div>
+                  <div className="p-4 flex flex-col grow">
+                    <div className="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
+                    <div className="h-4 bg-gray-200 rounded mb-2 w-1/2"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center space-x-8 border-b-2 pb-4 border-gray-300 overflow-x-auto">
               <button
-                key={category._id}
-                onClick={() => handleCategoryChange(category._id)}
+                onClick={() => handleCategoryChange("")}
                 className={`cursor-pointer text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
-                  selectedCategory === category._id
+                  selectedCategory === ""
                     ? "border-orange-500 text-orange-500"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-blue-400"
                 }`}
               >
-                {category.name}
+                All
               </button>
-            ))}
-          </div>
+              {categories.map((category) => (
+                <button
+                  key={category._id}
+                  onClick={() => handleCategoryChange(category._id)}
+                  className={`cursor-pointer text-base font-medium whitespace-nowrap border-b-2 transition-colors ${
+                    selectedCategory === category._id
+                      ? "border-orange-500 text-orange-500"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-blue-400"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -131,7 +148,6 @@ export default function BlogsPage() {
           <div className="lg:col-span-2">
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {/* Show skeleton loading cards */}
                 {[1, 2, 3, 4, 5, 6].map((item) => (
                   <div
                     key={item}

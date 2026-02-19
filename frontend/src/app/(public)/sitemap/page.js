@@ -85,36 +85,36 @@ export default function SitemapPage() {
                 <li>
                   <Link
                     href="/"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors group"
+                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors group"
                   >
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                     Home
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/blogs"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors group"
+                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors group"
                   >
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                     All Blogs
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/about"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors group"
+                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors group"
                   >
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                     About Us
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/contact"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors group"
+                    className="flex items-center gap-1 text-gray-700 hover:text-blue-600 transition-colors group"
                   >
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                     Contact
                   </Link>
                 </li>
@@ -135,9 +135,9 @@ export default function SitemapPage() {
                       href={`/category/${category.name
                         .toLowerCase()
                         .replace(/\s+/g, "-")}`}
-                      className="flex items-center gap-2 text-gray-700 hover:text-green-600 transition-colors group"
+                      className="flex items-center gap-1 text-gray-700 hover:text-green-600 transition-colors group"
                     >
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                       {category.name}
                     </Link>
                   </li>
@@ -209,9 +209,9 @@ export default function SitemapPage() {
                       <li key={blog._id}>
                         <Link
                           href={`/blogs/${blog.slug}`}
-                          className="group flex items-start gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors"
+                          className="group flex items-start gap-1 hover:bg-gray-50 p-2 rounded-lg transition-colors"
                         >
-                          <ChevronRight className="w-4 h-4 text-gray-400 mt-1 group-hover:text-orange-600 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                          <ChevronRight className="w-4 h-4 text-gray-400 mt-1 group-hover:text-orange-600 group-hover:translate-x-px transition-all flex-shrink-0" />
                           <div className="flex-1">
                             <div className="flex items-start justify-between gap-4">
                               <span className="text-gray-700 group-hover:text-orange-600 transition-colors font-medium">

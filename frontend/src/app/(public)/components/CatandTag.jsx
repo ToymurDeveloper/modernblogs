@@ -55,16 +55,16 @@ export default function SitemapPage() {
               <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
             </div>
 
-            <ul className="space-y-3">
+            <ul className="flex flex-wrap gap-4">
               {categories.map((category) => (
                 <li key={category._id}>
                   <Link
                     href={`/category/${category.name
                       .toLowerCase()
                       .replace(/\s+/g, "-")}`}
-                    className="flex items-center gap-2 text-gray-700 hover:text-green-600 transition-colors group"
+                    className="flex items-center gap-0.5 text-gray-700 hover:text-green-600 transition-colors group"
                   >
-                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-px transition-transform" />
                     {category.name}
                   </Link>
                 </li>

@@ -11,7 +11,7 @@ const HomePage = () => {
     <div>
       <Header />
       <BlogsPage />
-      {/* <CatandTag/> */}
+      <CatandTag />
       <Service />
       <About />
       <Contact />

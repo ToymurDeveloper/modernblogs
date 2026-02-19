@@ -23,10 +23,10 @@ export default function TrendingBlogs({ blogs }) {
 
             <Link
               href={`/blogs/${blog.slug}`}
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 group"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors group"
             >
               Read now
-              <ArrowRight className="ms-1 group-hover:translate-x-px transition-transform w-4 h-4 text-gray-700 hover:text-indigo-600" />
+              <ArrowRight className="ms-1 w-4 h-4 group-hover:translate-x-px transition-transform" />
             </Link>
           </div>
         ))}
