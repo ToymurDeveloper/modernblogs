@@ -96,16 +96,16 @@ export default function BlogsPage() {
   };
 
   const fetchBlogs = async () => {
+    setLoading(true);
     const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
     const cached = getCachedData(cacheKey);
-
     if (cached) {
       setBlogs(cached.blogs);
       setTotalPages(cached.totalPages);
       setLoading(false);
       return;
     }
-    setLoading(true);
+
     try {
       const params = {
         page: currentPage,

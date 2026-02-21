@@ -8,7 +8,6 @@ import Pagination from "../components/Pagination";
 import TrendingBlogs from "../components/TrendingBlogs";
 import PopularBlogs from "../components/PopularBlogs";
 import { getCachedData, setCachedData } from "../../../../utils/cache";
-// import { getCachedData, setCachedData } from "@/utils/cache";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
@@ -16,8 +15,8 @@ export default function BlogsPage() {
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingTrending, setLoadingTrending] = useState(true); // for trending
-  const [loadingPopular, setLoadingPopular] = useState(true); // for popular
+  const [loadingTrending, setLoadingTrending] = useState(true);
+  const [loadingPopular, setLoadingPopular] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -93,16 +92,16 @@ export default function BlogsPage() {
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      setLoading(true);
       const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
       const cached = getCachedData(cacheKey);
-
       if (cached) {
         setBlogs(cached.blogs);
         setTotalPages(cached.totalPages);
         setLoading(false);
         return;
       }
-      setLoading(true);
+
       try {
         const params = {
           page: currentPage,
@@ -146,7 +145,7 @@ export default function BlogsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Category Tabs */}
         <div className="mb-8">
-          {loadingCategories  ? (
+          {loadingCategories ? (
             <div className="grid gap-6">
               {[1].map((item) => (
                 <div
