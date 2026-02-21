@@ -59,6 +59,7 @@ export default function BlogsPage() {
           `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
         );
         setTrendingBlogs(response.data.blogs);
+        setCachedData("trendingBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
       } finally {
@@ -79,6 +80,7 @@ export default function BlogsPage() {
           `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
         );
         setPopularBlogs(response.data.blogs);
+        setCachedData("popularBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
       } finally {
@@ -116,6 +118,10 @@ export default function BlogsPage() {
         );
         setBlogs(response.data.blogs);
         setTotalPages(response.data.totalPages);
+        setCachedData(cacheKey, {
+          blogs: response.data.blogs,
+          totalPages: response.data.totalPages,
+        });
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       } finally {

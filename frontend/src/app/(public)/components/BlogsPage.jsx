@@ -126,7 +126,6 @@ export default function BlogsPage() {
         setLoading(false);
       }
     };
-
     fetchBlogs();
   }, [currentPage, selectedCategory]);
 
