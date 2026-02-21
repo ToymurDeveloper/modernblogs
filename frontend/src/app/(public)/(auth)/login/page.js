@@ -57,7 +57,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="rounded-md space-y-2">
             <div>
               <label htmlFor="email" className="sr-only">
                 Email address

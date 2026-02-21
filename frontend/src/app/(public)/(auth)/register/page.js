@@ -67,7 +67,7 @@ export default function RegisterPage() {
             </div>
           )}
 
-          <div className="rounded-md shadow-sm space-y-4">
+          <div className="rounded-md space-y-2">
             <div>
               <label htmlFor="name" className="sr-only">
                 Full name

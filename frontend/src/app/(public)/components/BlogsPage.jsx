@@ -7,6 +7,8 @@ import BlogCard from "../components/BlogCard";
 import Pagination from "../components/Pagination";
 import TrendingBlogs from "../components/TrendingBlogs";
 import PopularBlogs from "../components/PopularBlogs";
+import { getCachedData, setCachedData } from "../../../../utils/cache";
+// import { getCachedData, setCachedData } from "@/utils/cache";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
@@ -20,33 +22,48 @@ export default function BlogsPage() {
 
   useEffect(() => {
     const fetchCategories = async () => {
+      const cached = getCachedData("categories");
+      if (cached) {
+        setCategories(cached);
+      }
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/categories`,
         );
         setCategories(response.data.categories);
+        setCachedData("categories", response.data.categories);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       }
     };
 
     const fetchTrendingBlogs = async () => {
+      const cached = getCachedData("trendingBlogs");
+      if (cached) {
+        setTrendingBlogs(cached);
+      }
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
         );
         setTrendingBlogs(response.data.blogs);
+        setCachedData("trendingBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
       }
     };
 
     const fetchPopularBlogs = async () => {
+      const cached = getCachedData("popularBlogs");
+      if (cached) {
+        setPopularBlogs(cached);
+      }
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
         );
         setPopularBlogs(response.data.blogs);
+        setCachedData("popularBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
       }
@@ -59,6 +76,15 @@ export default function BlogsPage() {
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
+      const cached = getCachedData(cacheKey);
+
+      if (cached) {
+        setBlogs(cached.blogs);
+        setTotalPages(cached.totalPages);
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       try {
         const params = {
@@ -74,6 +100,10 @@ export default function BlogsPage() {
         );
         setBlogs(response.data.blogs);
         setTotalPages(response.data.totalPages);
+        setCachedData(cacheKey, {
+          blogs: response.data.blogs,
+          totalPages: response.data.totalPages,
+        });
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       } finally {
