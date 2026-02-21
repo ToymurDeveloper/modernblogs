@@ -7,6 +7,7 @@ import BlogCard from "../components/BlogCard";
 import Pagination from "../components/Pagination";
 import TrendingBlogs from "../components/TrendingBlogs";
 import PopularBlogs from "../components/PopularBlogs";
+import { getCachedData, setCachedData } from "../../../../utils/cache";
 
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
@@ -14,6 +15,8 @@ export default function BlogsPage() {
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingTrending, setLoadingTrending] = useState(true); // for trending
+  const [loadingPopular, setLoadingPopular] = useState(true); // for popular
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -32,6 +35,10 @@ export default function BlogsPage() {
   }, [currentPage, selectedCategory, searchQuery]);
 
   const fetchCategories = async () => {
+    const cached = getCachedData("categories");
+    if (cached) {
+      setCategories(cached);
+    }
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/categories`,
@@ -43,6 +50,13 @@ export default function BlogsPage() {
   };
 
   const fetchTrendingBlogs = async () => {
+    setLoadingTrending(true);
+    const cached = getCachedData("trendingBlogs");
+    if (cached) {
+      setTrendingBlogs(cached);
+      setLoadingTrending(false);
+      return;
+    }
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
@@ -50,9 +64,19 @@ export default function BlogsPage() {
       setTrendingBlogs(response.data.blogs);
     } catch (error) {
       console.error("Failed to fetch latest blogs:", error);
+    } finally {
+      setLoadingTrending(false);
     }
   };
+
   const fetchPopularBlogs = async () => {
+    setLoadingPopular(true);
+    const cached = getCachedData("popularBlogs");
+    if (cached) {
+      setPopularBlogs(cached);
+      setLoadingPopular(false);
+      return;
+    }
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
@@ -60,10 +84,21 @@ export default function BlogsPage() {
       setPopularBlogs(response.data.blogs);
     } catch (error) {
       console.error("Failed to fetch latest blogs:", error);
+    } finally {
+      setLoadingPopular(false);
     }
   };
 
   const fetchBlogs = async () => {
+    const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
+    const cached = getCachedData(cacheKey);
+
+    if (cached) {
+      setBlogs(cached.blogs);
+      setTotalPages(cached.totalPages);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const params = {
@@ -225,11 +260,11 @@ export default function BlogsPage() {
           {/* Sidebar - Latest and Popular Blogs */}
           <div className="lg:col-span-1">
             <div>
-              <TrendingBlogs blogs={trendingBlogs} />
+              <TrendingBlogs blogs={trendingBlogs} loading={loadingTrending} />
             </div>
 
             <div className="mt-8">
-              <PopularBlogs blogs={popularBlogs} />
+              <PopularBlogs blogs={popularBlogs} loading={loadingPopular} />
             </div>
           </div>
         </div>

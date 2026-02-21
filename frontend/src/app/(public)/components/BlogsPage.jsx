@@ -55,6 +55,8 @@ export default function BlogsPage() {
         setCachedData("trendingBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
+      } finally {
+        setLoadingTrending(false);
       }
     };
 
@@ -74,6 +76,8 @@ export default function BlogsPage() {
         setCachedData("popularBlogs", response.data.blogs);
       } catch (error) {
         console.error("Failed to fetch latest blogs:", error);
+      } finally {
+        setLoadingPopular(false);
       }
     };
 
@@ -229,11 +233,11 @@ export default function BlogsPage() {
           {/* Sidebar - Latest and Popular Blogs */}
           <div className="lg:col-span-1">
             <div>
-              <TrendingBlogs blogs={trendingBlogs} />
+              <TrendingBlogs blogs={trendingBlogs} loading={loadingTrending} />
             </div>
 
             <div className="mt-8">
-              <PopularBlogs blogs={popularBlogs} />
+              <PopularBlogs blogs={popularBlogs} loading={loadingPopular} />
             </div>
           </div>
         </div>
