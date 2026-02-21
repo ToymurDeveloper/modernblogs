@@ -15,8 +15,8 @@ export default function BlogsPage() {
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loadingTrending, setLoadingTrending] = useState(true); // for trending
-  const [loadingPopular, setLoadingPopular] = useState(true); // for popular
+  const [loadingTrending, setLoadingTrending] = useState(true);
+  const [loadingPopular, setLoadingPopular] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -26,106 +26,104 @@ export default function BlogsPage() {
   const searchQuery = searchParams.get("search") || "";
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      setLoadingCategories(true);
+      const cached = getCachedData("categories");
+      if (cached) {
+        setCategories(cached);
+        setLoadingCategories(false);
+      }
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+        );
+        setCategories(response.data.categories);
+        setCachedData("categories", response.data.categories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    const fetchTrendingBlogs = async () => {
+      setLoadingTrending(true);
+      const cached = getCachedData("trendingBlogs");
+      if (cached) {
+        setTrendingBlogs(cached);
+        setLoadingTrending(false);
+        return;
+      }
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
+        );
+        setTrendingBlogs(response.data.blogs);
+      } catch (error) {
+        console.error("Failed to fetch latest blogs:", error);
+      } finally {
+        setLoadingTrending(false);
+      }
+    };
+
+    const fetchPopularBlogs = async () => {
+      setLoadingPopular(true);
+      const cached = getCachedData("popularBlogs");
+      if (cached) {
+        setPopularBlogs(cached);
+        setLoadingPopular(false);
+        return;
+      }
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
+        );
+        setPopularBlogs(response.data.blogs);
+      } catch (error) {
+        console.error("Failed to fetch latest blogs:", error);
+      } finally {
+        setLoadingPopular(false);
+      }
+    };
     fetchCategories();
     fetchTrendingBlogs();
     fetchPopularBlogs();
   }, []);
 
   useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
+      const cached = getCachedData(cacheKey);
+      if (cached) {
+        setBlogs(cached.blogs);
+        setTotalPages(cached.totalPages);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const params = {
+          page: currentPage,
+          limit: 9,
+          ...(selectedCategory && { category: selectedCategory }),
+          ...(searchQuery && { search: searchQuery }),
+        };
+
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/blogs/public`,
+          { params },
+        );
+        setBlogs(response.data.blogs);
+        setTotalPages(response.data.totalPages);
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchBlogs();
   }, [currentPage, selectedCategory, searchQuery]);
-
-  const fetchCategories = async () => {
-    setLoadingCategories(true);
-    const cached = getCachedData("categories");
-    if (cached) {
-      setCategories(cached);
-      setLoadingCategories(false);
-    }
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories`,
-      );
-      setCategories(response.data.categories);
-      setCachedData("categories", response.data.categories);
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    } finally {
-      setLoadingCategories(false);
-    }
-  };
-
-  const fetchTrendingBlogs = async () => {
-    setLoadingTrending(true);
-    const cached = getCachedData("trendingBlogs");
-    if (cached) {
-      setTrendingBlogs(cached);
-      setLoadingTrending(false);
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/trending?limit=5&status=published`,
-      );
-      setTrendingBlogs(response.data.blogs);
-    } catch (error) {
-      console.error("Failed to fetch latest blogs:", error);
-    } finally {
-      setLoadingTrending(false);
-    }
-  };
-
-  const fetchPopularBlogs = async () => {
-    setLoadingPopular(true);
-    const cached = getCachedData("popularBlogs");
-    if (cached) {
-      setPopularBlogs(cached);
-      setLoadingPopular(false);
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/popular?limit=5&status=published`,
-      );
-      setPopularBlogs(response.data.blogs);
-    } catch (error) {
-      console.error("Failed to fetch latest blogs:", error);
-    } finally {
-      setLoadingPopular(false);
-    }
-  };
-
-  const fetchBlogs = async () => {
-    setLoading(true);
-    const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
-    const cached = getCachedData(cacheKey);
-    if (cached) {
-      setBlogs(cached.blogs);
-      setTotalPages(cached.totalPages);
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const params = {
-        page: currentPage,
-        limit: 9,
-        ...(selectedCategory && { category: selectedCategory }),
-        ...(searchQuery && { search: searchQuery }),
-      };
-
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/blogs/public`,
-        { params },
-      );
-      setBlogs(response.data.blogs);
-      setTotalPages(response.data.totalPages);
-    } catch (error) {
-      console.error("Failed to fetch blogs:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
