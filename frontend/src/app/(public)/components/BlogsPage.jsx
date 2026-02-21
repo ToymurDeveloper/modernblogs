@@ -16,6 +16,8 @@ export default function BlogsPage() {
   const [popularBlogs, setPopularBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingTrending, setLoadingTrending] = useState(true); // for trending
+  const [loadingPopular, setLoadingPopular] = useState(true); // for popular
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -38,9 +40,12 @@ export default function BlogsPage() {
     };
 
     const fetchTrendingBlogs = async () => {
+      setLoadingTrending(true);
       const cached = getCachedData("trendingBlogs");
       if (cached) {
         setTrendingBlogs(cached);
+        setLoadingTrending(false);
+        return;
       }
       try {
         const response = await axios.get(
@@ -54,9 +59,12 @@ export default function BlogsPage() {
     };
 
     const fetchPopularBlogs = async () => {
+      setLoadingPopular(true);
       const cached = getCachedData("popularBlogs");
       if (cached) {
         setPopularBlogs(cached);
+        setLoadingPopular(false);
+        return;
       }
       try {
         const response = await axios.get(
