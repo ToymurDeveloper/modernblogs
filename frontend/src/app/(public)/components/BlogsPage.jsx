@@ -18,15 +18,18 @@ export default function BlogsPage() {
   const [loading, setLoading] = useState(true);
   const [loadingTrending, setLoadingTrending] = useState(true); // for trending
   const [loadingPopular, setLoadingPopular] = useState(true); // for popular
+  const [loadingCategories, setLoadingCategories] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setLoadingCategories(true);
       const cached = getCachedData("categories");
       if (cached) {
         setCategories(cached);
+        setLoadingCategories(false);
       }
       try {
         const response = await axios.get(
@@ -36,6 +39,8 @@ export default function BlogsPage() {
         setCachedData("categories", response.data.categories);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoadingCategories(false);
       }
     };
 
@@ -141,7 +146,7 @@ export default function BlogsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Category Tabs */}
         <div className="mb-8">
-          {loading ? (
+          {loadingCategories  ? (
             <div className="grid gap-6">
               {[1].map((item) => (
                 <div
