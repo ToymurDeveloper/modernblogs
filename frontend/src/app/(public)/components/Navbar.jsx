@@ -19,6 +19,7 @@ export default function Navbar() {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const sideMenuRef = useRef();
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const { user, logout } = useAuth();
@@ -32,10 +33,12 @@ export default function Navbar() {
 
   const openMenu = () => {
     sideMenuRef.current.style.transform = "translateX(16rem)";
+    setMenuOpen(true);
   };
 
   const closeMenu = () => {
     sideMenuRef.current.style.transform = "translateX(-16rem)";
+    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -85,13 +88,15 @@ export default function Navbar() {
               </svg>
             </button>
           </div>
+          {menuOpen && (
+            <div className="md:hidden fixed inset-0" onClick={closeMenu} />
+          )}
           {/* Logo */}
           <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
             <Link href="/" className="flex items-center space-x-1">
-              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">W</span>
+              <div className="px-2.5 py-1.25 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">WonderLog</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">WanderLog</span>
             </Link>
           </div>
 
@@ -141,7 +146,7 @@ export default function Navbar() {
 
                   {/* Dropdown Menu */}
                   {profileDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 border border-gray-100">
+                    <div className="absolute right-0 mt-3 w-56 bg-white rounded-lg shadow-lg py-2 border border-gray-100">
                       <div className="px-4 py-3 border-b border-gray-100">
                         <p className="text-sm font-semibold text-gray-900">
                           {user.name}
@@ -151,7 +156,7 @@ export default function Navbar() {
 
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition duration-150"
+                        className="block mt-1.5 px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 transition duration-150"
                         onClick={() => setProfileDropdownOpen(false)}
                       >
                         <div className="flex items-center space-x-2">
@@ -160,7 +165,7 @@ export default function Navbar() {
                         </div>
                       </Link>
 
-                      <hr className="my-2 border-gray-100" />
+                      <hr className="my-1 border-gray-100" />
 
                       <button
                         onClick={handleLogout}
@@ -204,7 +209,7 @@ export default function Navbar() {
           ref={sideMenuRef}
           className="md:hidden fixed -left-64 top-0 w-50 h-full z-50 bg-rose-50 duration-400 space-y-2 rounded-br-lg"
         >
-          <div className="flex justify-between items-center px-4 py-3 bg-amber-300">
+          <div className="flex justify-between items-center mb-0 p-4 bg-amber-300">
             <span className="text-xl font-bold text-gray-800">Menu</span>
 
             <button
@@ -214,7 +219,7 @@ export default function Navbar() {
               <XCircle />
             </button>
           </div>
-          <div className="pb-4 ">
+          <div>
             {navItems.map((item, index) => (
               <Link
                 key={index}
@@ -226,7 +231,7 @@ export default function Navbar() {
                 className={`block px-4 py-3 transition-colors ${
                   isActive(item.path)
                     ? "bg-indigo-100 text-indigo-700 font-semibold border-l-4 border-indigo-600"
-                    : "text-indigo-600 hover:bg-red-100"
+                    : "text-indigo-600 hover:bg-rose-100"
                 }`}
               >
                 {item.name}
