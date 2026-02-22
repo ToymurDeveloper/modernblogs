@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function TrendingBlogs({ blogs, loading }) {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
+    <div className="bg-white rounded-lg px-3 py-5 shadow-sm">
       <h2 className="text-2xl font-bold text-gray-900 mb-5">
         Trending on
         <span>
