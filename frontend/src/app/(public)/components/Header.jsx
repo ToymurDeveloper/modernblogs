@@ -129,7 +129,7 @@ export default function Header() {
           </form>
           {/* Search Results Dropdown */}
           {showResults && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 max-h-[500px] overflow-y-auto z-50">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 max-h-125 overflow-y-auto z-50">
               {searchResults.map((blog) => (
                 <Link
                   key={blog._id}
@@ -138,7 +138,7 @@ export default function Header() {
                   className="flex items-start gap-4 p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 transition-colors"
                 >
                   {/* Blog Image */}
-                  <div className="relative w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
+                  <div className="relative w-32 h-24 shrink-0 rounded-lg overflow-hidden bg-gray-200">
                     <Image
                       src={blog.image}
                       alt={blog.title}
@@ -192,7 +192,7 @@ export default function Header() {
             !isSearching &&
             searchQuery.trim().length >= 2 &&
             searchResults.length === 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 p-8 text-center">
+              <div className="absolute top-full left-0 right-0 z-60 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 p-8 text-center">
                 <svg
                   className="w-12 h-12 text-gray-300 mx-auto mb-3"
                   fill="none"
@@ -207,7 +207,7 @@ export default function Header() {
                   />
                 </svg>
                 <p className="text-gray-500 font-medium">
-                  No results found for `{searchQuery}`
+                  No results found for
                 </p>
                 <p className="text-gray-400 text-sm mt-1">
                   Try searching with different keywords
