@@ -1,5 +1,4 @@
-// Cache configuration
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export const getCachedData = (key) => {
   if (typeof window === "undefined") return null;
