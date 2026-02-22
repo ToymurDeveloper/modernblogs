@@ -95,7 +95,7 @@ export default function BlogsPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
-      const cacheKey = `blogs_${currentPage}_${selectedCategory}_${searchQuery}`;
+      const cacheKey = `blogs_${currentPage}_${selectedCategory}`;
       const cached = getCachedData(cacheKey);
       if (cached) {
         setBlogs(cached.blogs);
