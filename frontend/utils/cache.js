@@ -1,4 +1,4 @@
-const CACHE_DURATION = 2 * 60 * 1000;
+const CACHE_DURATION = 60 * 60 * 1000;
 
 export const getCachedData = (key) => {
   if (typeof window === "undefined") return null;
