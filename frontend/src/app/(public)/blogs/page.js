@@ -207,7 +207,7 @@ export default function BlogsPage() {
           {/* Main Content - Blog Cards */}
           <div className="lg:col-span-2">
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
                 {/* Show skeleton loading cards */}
                 {[1, 2, 3, 4, 5, 6].map((item) => (
                   <div
