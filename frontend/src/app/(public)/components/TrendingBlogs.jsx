@@ -33,12 +33,12 @@ export default function TrendingBlogs({ blogs, loading }) {
                   <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-3 leading-relaxed">
                     {blog.title}
                   </h3>
-                  <div className="relative w-24 h-18 shrink-0 rounded-sm overflow-hidden">
+                  <div className="relative w-25 h-18 shrink-0 rounded-sm overflow-hidden">
                     <Image
                       src={blog.image}
                       alt={blog.title}
                       fill
-                      sizes="96px"
+                      sizes="100px"
                       className="object-cover"
                       loading="lazy"
                       quality={80}
