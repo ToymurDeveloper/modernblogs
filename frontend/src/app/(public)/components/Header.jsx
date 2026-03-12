@@ -104,10 +104,6 @@ export default function Header() {
           <form onSubmit={handleSearch}>
             <div className="flex items-center bg-white rounded-full shadow-lg border border-gray-200 overflow-hidden">
               {/* Search Icon */}
-              <div className="pl-6 pr-4">
-                <Search className="w-5 h-5 text-gray-500" />
-              </div>
-
               {/* Input */}
               <input
                 type="text"
@@ -115,15 +111,15 @@ export default function Header() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => searchResults.length > 0 && setShowResults(true)}
                 placeholder="Places to go, explore to deep..."
-                className="w-full text-gray-700 text-base outline-none placeholder-gray-400"
+                className="pl-6 w-full text-gray-700 text-base outline-none placeholder-gray-400"
               />
 
               {/* Search Button */}
               <button
                 type="submit"
-                className="cursor-pointer bg-green-500 hover:bg-green-600 border border-green-600 text-gray-700 font-semibold px-6 py-2 m-1 rounded-full transition-colors"
+                className="cursor-pointer bg-green-500 hover:bg-green-600 border border-green-600 text-gray-700 font-semibold p-2 m-1 rounded-full transition-colors"
               >
-                Search
+                <Search className="w-5 h-5 text-gray-800" />
               </button>
             </div>
           </form>

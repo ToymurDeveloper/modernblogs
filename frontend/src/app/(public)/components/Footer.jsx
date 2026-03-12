@@ -271,7 +271,7 @@ const Footer = () => {
         <div className="border-t border-gray-600 pt-8">
           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <div id="google_translate_element"></div>
-            <div className="text-gray-500 text-sm flex items-center gap-3">
+            <div className="text-gray-500 text-sm flex items-center gap-4">
               <Link
                 href="privacy"
                 className="text-gray-300 hover:text-gray-200"
