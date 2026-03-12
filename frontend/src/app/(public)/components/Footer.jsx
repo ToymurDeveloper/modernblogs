@@ -177,7 +177,7 @@ const Footer = () => {
           <div className="mb-2">
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
-              Latest Posts
+              Trending Posts
             </h3>
             <div className="space-y-2">
               {blogs.map((blog) => (
@@ -272,13 +272,19 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <div id="google_translate_element"></div>
             <div className="text-gray-500 text-sm flex items-center gap-3">
-              <Link href="privacy" className="text-red-500">
+              <Link
+                href="privacy"
+                className="text-gray-300 hover:text-gray-200"
+              >
                 Privacy Policy
               </Link>
-              <Link href="terms" className="text-blue-500">
+              <Link href="terms" className="text-gray-300 hover:text-gray-200">
                 Terms
               </Link>
-              <Link href="contact" className="text-green-500">
+              <Link
+                href="contact"
+                className="text-gray-300 hover:text-gray-200"
+              >
                 Contact
               </Link>
             </div>
