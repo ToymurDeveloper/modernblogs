@@ -146,8 +146,8 @@ const AdminLayout = ({ children }) => {
                     isActive
                       ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-l-4 border-blue-500 text-blue-400 shadow-inner"
                       : isSidebarOpen
-                      ? "hover:bg-gray-700/50"
-                      : ""
+                        ? "hover:bg-gray-700/50"
+                        : ""
                   }`}
                 >
                   <div

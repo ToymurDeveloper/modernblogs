@@ -122,7 +122,7 @@ export default function SingleBlogClient({ params }) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Blog not found
+            Posts not found
           </h1>
           <Link
             href="/"
@@ -137,9 +137,13 @@ export default function SingleBlogClient({ params }) {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
+            {/* Title */}
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600 mb-6 leading-tight">
+              {blog.title}
+            </h1>
             {/* Featured Image */}
             <div className="relative rounded-md overflow-hidden max-h-100">
               <Image
@@ -154,11 +158,6 @@ export default function SingleBlogClient({ params }) {
 
             {/* Content Container */}
             <div className="py-8">
-              {/* Title */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600 mb-6 leading-tight">
-                {blog.title}
-              </h1>
-
               {/* Meta Information */}
               <div className="flex items-center space-x-4 mb-3">
                 <div className="flex items-center text-gray-700">
@@ -212,7 +211,7 @@ export default function SingleBlogClient({ params }) {
 
               {/* Blog Content */}
               <div
-                className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+                className="blog-content prose prose-lg max-w-none text-gray-700 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
 

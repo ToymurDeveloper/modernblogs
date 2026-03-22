@@ -14,7 +14,7 @@
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
-  margin: 1rem auto;
+  margin: 0 auto;
   display: block;
 }
 
@@ -120,7 +120,6 @@
 }
 
 .ProseMirror p {
-  margin: 0.5rem 0;
   line-height: 1.6;
 }
 
