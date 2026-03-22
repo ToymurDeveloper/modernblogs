@@ -33,7 +33,7 @@ export default function PopularBlogs({ blogs, loading }) {
                   <h3 className="text-base font-medium text-gray-900 mb-1 line-clamp-3 leading-relaxed">
                     {blog.title}
                   </h3>
-                  <div className="relative lg:w-25 w-27 h-18 shrink-0 rounded-sm overflow-hidden">
+                  <div className="relative lg:w-25 w-28 h-18 shrink-0 rounded-sm overflow-hidden">
                     <Image
                       src={blog.image}
                       alt={blog.title}

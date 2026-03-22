@@ -111,7 +111,7 @@ export default function Header() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => searchResults.length > 0 && setShowResults(true)}
                 placeholder="Places to go, explore to deep..."
-                className="pl-6 w-full text-gray-700 text-base outline-none placeholder-gray-400"
+                className="pl-5 w-full text-gray-700 text-base outline-none placeholder-gray-400"
               />
 
               {/* Search Button */}
