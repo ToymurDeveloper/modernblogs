@@ -325,7 +325,7 @@ const TiptapEditor = ({ content, onChange, disabled = false }) => {
       }),
       Image.configure({
         HTMLAttributes: {
-          class: "max-w-full h-auto rounded-lg",
+          class: "max-w-full h-auto rounded-lg mx-auto block",
         },
       }),
       TextAlign.configure({
