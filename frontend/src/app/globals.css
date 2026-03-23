@@ -25,6 +25,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.searchForm {
+  @media (max-width: 1160px) {
+    width: 350px;
+  }
+}
+
 .blog-content p {
   margin: 0.5rem 0;
   font-size: 16px;
