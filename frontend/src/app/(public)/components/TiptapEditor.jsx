@@ -288,7 +288,7 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
+        // disabled={!editor.can().chain().focus().undo().run()}
         className="p-2 rounded hover:bg-gray-200 disabled:opacity-50"
         title="Undo"
       >
@@ -298,7 +298,7 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
+        // disabled={!editor.can().chain().focus().redo().run()}
         className="p-2 rounded hover:bg-gray-200 disabled:opacity-50"
         title="Redo"
       >

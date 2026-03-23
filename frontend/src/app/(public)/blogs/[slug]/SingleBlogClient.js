@@ -137,11 +137,11 @@ export default function SingleBlogClient({ params }) {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600 mb-6 leading-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600 pb-5 leading-tight">
               {blog.title}
             </h1>
             {/* Featured Image */}
@@ -157,7 +157,7 @@ export default function SingleBlogClient({ params }) {
             </div>
 
             {/* Content Container */}
-            <div className="py-8">
+            <div className="pt-8">
               {/* Meta Information */}
               <div className="flex items-center space-x-4 mb-3">
                 <div className="flex items-center text-gray-700">
@@ -217,7 +217,7 @@ export default function SingleBlogClient({ params }) {
 
               {/* Tags */}
               {blog.tags && blog.tags.length > 0 && (
-                <div className="mt-12 pt-8 border-t border-gray-200">
+                <div className="mt-8 pt-6 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     Tags
                   </h3>
@@ -237,7 +237,7 @@ export default function SingleBlogClient({ params }) {
 
               {/* FAQs */}
               {blog.faqs && blog.faqs.length > 0 && (
-                <div className="mt-12 pt-8 border-t border-gray-200">
+                <div className="mt-10 pt-8 border-t border-gray-200">
                   <h2 className="text-2xl font-bold text-gray-900 mb-6">
                     Frequently Asked Questions
                   </h2>
@@ -257,7 +257,7 @@ export default function SingleBlogClient({ params }) {
               )}
 
               {/* Back to Blogs */}
-              <div className="mt-12 pt-8 border-t border-gray-200">
+              <div className="mt-10 pt-8 border-t border-gray-200">
                 <Link
                   href="/"
                   className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"

@@ -26,8 +26,8 @@ body {
 }
 
 .blog-content p {
-  margin: 1rem 0;
-  font-size: 17px;
+  margin: 0.5rem 0;
+  font-size: 16px;
 }
 .blog-content img {
   max-width: 100%;
@@ -37,4 +37,10 @@ body {
   margin: 0;
   color: #6b7280;
   font-style: italic;
+}
+
+.adminLayout {
+  @media (max-width: 780px) {
+    display: none;
+  }
 }

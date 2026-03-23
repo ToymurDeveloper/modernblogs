@@ -86,7 +86,7 @@ const AdminLayout = ({ children }) => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="adminLayout flex min-h-screen bg-gray-50">
       <aside
         className={`fixed left-0 top-0 h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-300 ease-in-out shadow-2xl z-40 ${
           isSidebarOpen ? "w-64 translate-x-0" : "w-20 -translate-x-0" // Changed from translate-x-full to -translate-x-0
