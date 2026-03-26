@@ -452,7 +452,7 @@ export default function Navbar() {
                   onFocus={() =>
                     searchResults.length > 0 && setShowResults(true)
                   }
-                  placeholder="Search to get products..."
+                  placeholder="Search to get posts..."
                   className="w-full px-4 text-gray-700 text-base outline-none placeholder-gray-500"
                   autoFocus
                 />
