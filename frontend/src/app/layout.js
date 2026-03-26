@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 const outfitFont = Outfit({
   subsets: ["latin"],
-  weight: ["500"],
+  weight: ["600"],
   variable: "--font-outfit",
 });
 const ovoFont = Ovo({
