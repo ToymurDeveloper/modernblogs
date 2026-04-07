@@ -256,9 +256,9 @@ const Footer = () => {
                 <Link
                   key={index}
                   href={link.href}
-                  className="text-gray-400 hover:text-white hover:bg-gray-800/50 p-2 rounded-lg transition-all duration-300 group"
+                  className="text-gray-300 hover:text-white hover:bg-gray-900/50 p-2 rounded-lg transition-all duration-300 group"
                 >
-                  <span className="group-hover:translate-x-1 transition-transform duration-300 block">
+                  <span className="group-hover:translate-x-px transition-transform duration-300 block">
                     {link.name}
                   </span>
                 </Link>
